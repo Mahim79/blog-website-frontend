@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components{
+  .btn{
+    @apply bg-teal text-slate-100 py-2 px-3 rounded-md
+  }
+}
