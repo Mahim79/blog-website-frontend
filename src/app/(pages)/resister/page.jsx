@@ -1,11 +1,74 @@
-import React from "react";
+'use client';
 
-const Resister = () => {
+import { useState } from 'react';
+import FormInput from '../../components/FormInput';
+
+export default function RegisterPage() {
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    if (form.password !== form.confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+    console.log('Register Data', form);
+  };
+
   return (
-    <div>
-      <h1>This is Resister Page</h1>
-    </div>
-  );
-};
+    <section className="min-h-screen flex items-center justify-center bg-slate-100 px-4">
+      <form
+        onSubmit={handleRegister}
+        className="bg-white shadow-md rounded-lg p-8 w-full max-w-md"
+      >
+        <h2 className="text-2xl font-bold mb-6 text-center text-slate-700">
+          Register
+        </h2>
 
-export default Resister;
+        <FormInput
+          label="Name"
+          name="name"
+          type="text"
+          value={form.name}
+          onChange={handleChange}
+        />
+        <FormInput
+          label="Email"
+          name="email"
+          type="email"
+          value={form.email}
+          onChange={handleChange}
+        />
+        <FormInput
+          label="Password"
+          name="password"
+          type="password"
+          value={form.password}
+          onChange={handleChange}
+        />
+        <FormInput
+          label="Confirm Password"
+          name="confirmPassword"
+          type="password"
+          value={form.confirmPassword}
+          onChange={handleChange}
+        />
+
+        <button
+          type="submit"
+          className="w-full mt-4 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded-md transition"
+        >
+          Sign Up
+        </button>
+      </form>
+    </section>
+  );
+}
