@@ -1,10 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLoginUserQuery } from '@/features/api/apiSlice';
 import FormInput from '../../../components/FormInput';
 
 export default function LoginPage() {
   const [form, setForm] = useState({ email: '', password: '' });
+  const [triggerLogin, setTriggerLogin] = useState(false);
+
+  const { data, isLoading, error, refetch } = useLoginUserQuery(
+    { email: form.email, password: form.password },
+    { skip: !triggerLogin }
+  );
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -12,8 +19,20 @@ export default function LoginPage() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log('Login Data', form);
+    setTriggerLogin(true);
+    refetch();
   };
+
+  useEffect(() => {
+    if (data && data.length > 0) {
+      alert('Login successful!');
+      console.log('User info:', data[0]);
+    }
+
+    if (triggerLogin && !isLoading && !error && (!data || data.length === 0)) {
+      alert('Invalid email or password.');
+    }
+  }, [data, isLoading, error, triggerLogin]);
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-slate-100 px-4">
@@ -44,7 +63,7 @@ export default function LoginPage() {
           type="submit"
           className="w-full mt-4 btn hover:bg-deepTeal text-white font-semibold py-2 px-4 rounded-md transition"
         >
-          Login
+          {isLoading ? 'Logging in...' : 'Login'}
         </button>
       </form>
     </section>
