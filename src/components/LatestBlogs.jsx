@@ -15,6 +15,8 @@ const LatestBlog = () => {
     refetchOnMountOrArgChange: true,
   });
 
+  console.log(blogs);
+  
   // Conditionally Rendered
   let content;
   if (isLoading) {

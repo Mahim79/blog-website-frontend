@@ -13,11 +13,11 @@ const apiSlice = createApi({
       query: (id) => `users/${id}`,
     }),
     getBlogs: builder.query({
-      query: (limit) => {
-        if (limit) {
-          return `blogs?_limit=${limit}`;
-        }
-        return 'blogs';
+      query: (data) => {
+        if (data.limit) {
+          return `blogs?_limit=${data.limit}`;
+        }if(data.category)
+        return `blogs?category=${data.category}`;
       },
     }),
     registerUser: builder.mutation({
