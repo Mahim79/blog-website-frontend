@@ -12,6 +12,7 @@ module.exports = {
     extend: {
       colors:{
         teal : "#00AAA1",
+        deepTeal:"#06928a",
         black:"#222222"
       }
     },
