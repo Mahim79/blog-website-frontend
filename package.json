@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start-api":"json-server --watch db.json -p 4000",
+    "start-api": "json-server --watch db.json -p 4000",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
