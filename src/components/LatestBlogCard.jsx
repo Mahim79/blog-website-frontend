@@ -10,9 +10,11 @@ const LatestBlogCard = ({ blog }) => {
   return (
     <div>
       <div className="w-72 h-[305px] sm:w-96 mx-auto m-5 relative rounded-lg overflow-hidden">
-        <span className="bg-teal text-white px-2 rounded-xl">
+        <span className="badge">
           {blog.category}
         </span>
+
+         {/* title  */}
         <Link
           href={`blogs/${blog.blogId}`}
           className="font-semibold hover:underline block text-lg"
@@ -28,10 +30,13 @@ const LatestBlogCard = ({ blog }) => {
         />
 
         <div className=" pt-1 w-full flex justify-center gap-1">
+          {/* go to user profile  */}
           <Link
             href={"/user"}
             className=" flex justify-center items-center gap-1"
           >
+            
+            {/* profile Image  */}
             <Image
               src={user?.image}
               alt="author"
@@ -43,6 +48,8 @@ const LatestBlogCard = ({ blog }) => {
           </Link>
           <p>| 30 min ago</p>
         </div>
+        
+        {/* Description  */}
         <p className=" text-justify text-sm p-2 line-clamp-2">{blog.body}</p>
       </div>
     </div>

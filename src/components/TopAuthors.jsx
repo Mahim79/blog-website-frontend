@@ -43,10 +43,10 @@ const TopAuthors = () => {
   if (authors?.length > 0) {
     content = (
       <div className="my-5">
-        <h2 className="font-bold mx-5 mt-10 text-3xl underline underline-offset-4 decoration-teal">
+        <h2 className="font-bold mx-5 md:mt-10 text-xl underline underline-offset-4 lg:text-center decoration-teal">
           Top Authors
         </h2>
-        <div className="p-5 w-full max-h-96 mt-5 rounded-md bg-slate-100 overflow-auto flex md:flex-col gap-4 items-center md:items-start justify-start">
+        <div className="px-4 py-2 w-full max-h-96 mt-5 rounded-md bg-slate-100 overflow-auto flex md:flex-col gap-4 items-center md:items-start justify-start">
           {authors.map((author) => (
             <div
               key={author.id}

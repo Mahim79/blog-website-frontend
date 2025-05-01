@@ -1,21 +1,26 @@
 "use client";
 import React from "react";
+import BlogCard from "./BlogCard";
 import { useGetBlogsQuery } from "@/features/api/apiSlice";
-import LatestBlogCard from "./LatestBlogCard";
+import { useSearchParams } from "next/navigation";
 
-const LatestBlog = () => {
-  // Blogs api call
+const AllBlogs = () => {
+  const searceParams = useSearchParams();
+  const category = searceParams.get("category");
+
   const {
     data: blogs,
-    isError,
     isLoading,
+    isError,
     error,
     isSuccess,
-  } = useGetBlogsQuery({limit:4}, {
-    refetchOnMountOrArgChange: true,
-  });
+  } = useGetBlogsQuery(
+    { category },
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  );
 
-  // Conditionally Rendered
   let content;
   if (isLoading) {
     content = (
@@ -26,7 +31,7 @@ const LatestBlog = () => {
   }
   if (isError) {
     content = (
-      <div className="my-5">
+      <div className="my-5 mx-auto">
         <h2 className=" mx-5 mt-10 text-3xl text-center">
           {error?.message || "Something went wrong"}
         </h2>
@@ -43,16 +48,16 @@ const LatestBlog = () => {
     );
   }
   if (blogs?.length > 0) {
-    content = blogs?.map((blog) => (
-      <LatestBlogCard key={blog.blogId} blog={blog} />
-    ));
+    content = blogs?.map((blog) => <BlogCard key={blog.blogId} blog={blog} />);
   }
-
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3  flex-wrap md:items-center  justify-center lg:justify-around gap-4 px-5  ">
-      {content}
+    <div>
+      <h2 className="font-bold m-5 md:mt-10 text-xl underline underline-offset-4 text-center decoration-teal">
+        All Blogs
+      </h2>
+      <div className="grid md:grid-cols-2 xl:grid-cols-3">{content}</div>
     </div>
   );
 };
 
-export default LatestBlog;
+export default AllBlogs;
