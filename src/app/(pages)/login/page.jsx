@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import FormInput from '../../components/FormInput';
+import FormInput from '../../../components/FormInput';
 
 export default function LoginPage() {
   const [form, setForm] = useState({ email: '', password: '' });

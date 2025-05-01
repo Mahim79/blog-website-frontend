@@ -14,9 +14,12 @@ module.exports = {
         teal : "#00AAA1",
         deepTeal:"#06928a",
         black:"#222222"
-      }
+      },
+      screens: {
+        'xl': '1480px',
+      },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/line-clamp')],
 }
 
