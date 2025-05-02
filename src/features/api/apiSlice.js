@@ -17,13 +17,39 @@ const apiSlice = createApi({
                     return `blogs?_limit=${data.limit}`
                 }if(data.category){
                     return `blogs?category=${data.category}`
+                }if(data.userID){
+                    return `blogs?userID=${data.userID}`
                 }
                 return "blogs"
             }
         }),
+        getBlog: builder.query({
+            query:(id)=> `blogs/${id}`
+        }),
+        relatedBlogs: builder.query({
+            query:(category)=> `blogs?category=${category}`
+        }),
+        // getLikesByPostId: builder.query({
+        //     query: (blogID) => `/likes?_blogID=${blogID}`,
+            
+        // }),
+        // likeBlog: builder.mutation({
+        //     query:(data)=>({
+        //         url: "likes",
+        //         method:"POST",
+        //         data
+        //     })
+        // }),
+        // disLikeBlog: builder.mutation({
+        //     query:(data)=>({
+        //         url: "likes",
+        //         method:"DELETE",
+        //         data
+        //     })
+        // }),
         
     })
 })
 
 export default apiSlice
-export const {useGetUsersQuery,useGetUserQuery,useGetBlogsQuery} = apiSlice
+export const {useGetUsersQuery,useGetUserQuery,useGetBlogsQuery, useGetBlogQuery,useGetLikesByPostIdQuery,useLikeBlogMutation,useDisLikeBlogMutation, useRelatedBlogsQuery} = apiSlice

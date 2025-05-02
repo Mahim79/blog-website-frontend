@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useGetUserQuery } from "@/features/api/apiSlice";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,12 +6,12 @@ import React from "react";
 import { IoIosTimer } from "react-icons/io";
 
 const BlogCard = ({ blog }) => {
-  const { data: author } = useGetUserQuery(blog.userID);
+  const { data: author } = useGetUserQuery(blog?.userID);
   return (
     <div>
       <div className="flex items-center justify-center gap-2 m-5 ">
         {/* cover image  */}
-        <div className="flex-1">
+        <Link href={`/blogs/${blog.id}`} className="flex-1">
           <Image
             src={blog?.image}
             alt="cover"
@@ -19,14 +19,21 @@ const BlogCard = ({ blog }) => {
             height={200}
             className="w-72 h-36 rounded-md"
           />
-        </div>
+        </Link>
 
         <div className="flex-1">
           <div className="flex flex-col items-start justify-center gap-1">
             <span className="badge">{blog.category}</span>
-            <Link href={blog.blogId} className="font-semibold hover:underline">{blog.title}</Link>
             <Link
-              href={"/user"}
+              href={`/blogs/${blog.id}`}
+              className="font-semibold hover:underline"
+            >
+              {blog.title}
+            </Link>
+
+            {/* author  */}
+            <Link
+              href={`/user/${blog?.userID}`}
               className=" flex justify-center items-center gap-1"
             >
               <Image
@@ -44,7 +51,7 @@ const BlogCard = ({ blog }) => {
           </div>
         </div>
       </div>
-      <p className="mx-5 text-sm -mt-5 mb-5 text-justify truncate-2-lines">
+      <p className="mx-5 text-sm -mt-5 mb-5 text-justify line-clamp-2">
         {blog.body}
       </p>
     </div>

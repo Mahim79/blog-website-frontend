@@ -11,17 +11,10 @@
     @apply text-sm font-semibold border border-teal rounded-full text-center mt-5 px-2 py-2
   }
   .category-active{
-    @apply bg-deepTeal text-slate-100
+    @apply bg-teal text-slate-100
   }
   .badge{
     @apply bg-teal text-white px-2 rounded-xl text-sm
   }
   
-}
-
-.truncate-2-lines{
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
 }
