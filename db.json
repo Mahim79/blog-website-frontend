@@ -1,0 +1,320 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Olivia Stone",
+      "email": "olivia.stone@example.com",
+      "password": "password123",
+      "image": "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?auto=format&fit=crop&w=500&q=80"
+    },
+    {
+      "id": "2",
+      "name": "Liam Johnson",
+      "email": "liam.johnson@example.com",
+      "password": "password123",
+      "image": "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=500&q=80"
+    },
+    {
+      "id": "3",
+      "name": "Emma Davis",
+      "email": "emma.davis@example.com",
+      "password": "password123",
+      "image": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=500&q=80"
+    },
+    {
+      "id": "4",
+      "name": "Noah Smith",
+      "email": "noah.smith@example.com",
+      "password": "password123",
+      "image": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=500&q=80"
+    },
+    {
+      "id": "5",
+      "name": "Ava Brown",
+      "email": "ava.brown@example.com",
+      "password": "password123",
+      "image": "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?auto=format&fit=crop&w=500&q=80"
+    },
+    {
+      "id": "6",
+      "name": "William Jones",
+      "email": "william.jones@example.com",
+      "password": "password123",
+      "image": "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=500&q=80"
+    },
+    {
+      "id": "7",
+      "name": "Sophia Wilson",
+      "email": "sophia.wilson@example.com",
+      "password": "password123",
+      "image": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=500&q=80"
+    },
+    {
+      "id": "8",
+      "name": "James Taylor",
+      "email": "james.taylor@example.com",
+      "password": "password123",
+      "image": "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?auto=format&fit=crop&w=500&q=80"
+    },
+    {
+      "id": "9",
+      "name": "Isabella Martinez",
+      "email": "isabella.martinez@example.com",
+      "password": "password123",
+      "image": "https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?auto=format&fit=crop&w=500&q=80"
+    },
+    {
+      "id": "10",
+      "name": "Benjamin Lee",
+      "email": "benjamin.lee@example.com",
+      "password": "password123",
+      "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=500&q=80"
+    },
+    {
+      "id": "11",
+      "name": "Mia Walker",
+      "email": "mia.walker@example.com",
+      "password": "password123",
+      "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=500&q=80"
+    },
+    {
+      "id": "12",
+      "name": "Elijah Hall",
+      "email": "elijah.hall@example.com",
+      "password": "password123",
+      "image": "https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=500&q=80"
+    },
+    {
+      "id": "13",
+      "name": "Charlotte Allen",
+      "email": "charlotte.allen@example.com",
+      "password": "password123",
+      "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=80"
+    },
+    {
+      "id": "14",
+      "name": "Logan Young",
+      "email": "logan.young@example.com",
+      "password": "password123",
+      "image": "https://images.unsplash.com/photo-1504595403659-9088ce801e29?auto=format&fit=crop&w=500&q=80"
+    },
+    {
+      "id": "15",
+      "name": "Amelia Hernandez",
+      "email": "amelia.hernandez@example.com",
+      "password": "password123",
+      "image": "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=500&q=80"
+    },
+    {
+      "id": "16",
+      "name": "Lucas King",
+      "email": "lucas.king@example.com",
+      "password": "password123",
+      "image": "https://images.unsplash.com/photo-1517365830460-955ce3ccd263?auto=format&fit=crop&w=500&q=80"
+    },
+    {
+      "id": "17",
+      "name": "Harper Wright",
+      "email": "harper.wright@example.com",
+      "password": "password123",
+      "image": "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=500&q=80"
+    },
+    {
+      "id": "18",
+      "name": "Jackson Scott",
+      "email": "jackson.scott@example.com",
+      "password": "password123",
+      "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=500&q=80"
+    },
+    {
+      "id": "19",
+      "name": "Evelyn Green",
+      "email": "evelyn.green@example.com",
+      "password": "password123",
+      "image": "https://images.unsplash.com/photo-1552058544-f2b08422138a?auto=format&fit=crop&w=500&q=80"
+    },
+    {
+      "id": "20",
+      "name": "Aiden Adams",
+      "email": "aiden.adams@example.com",
+      "password": "password123",
+      "image": "https://images.unsplash.com/photo-1519340333755-5063bfa3e64d?auto=format&fit=crop&w=500&q=80"
+    },
+    {
+      "name": "Ava Brown",
+      "email": "ava.brown@example.com",
+      "password": "password123",
+      "confirmPassword": "password123",
+      "id": "9gdkp6I"
+    },
+    {
+      "name": "Ava Brown",
+      "email": "ava.brown@example.com",
+      "password": "password123",
+      "confirmPassword": "password123",
+      "id": "N9Oyo2C"
+    }
+  ],
+  "blogs": [
+    {
+      "blogId": "b1f3e3b7-d92a-4ad2-a2e9-5a5ecfcad8bf",
+      "userID": 1,
+      "title": "Exploring the Alps",
+      "body": "The Alps offer an incredible mix of adventure and serenity. From skiing and hiking to relaxing in cozy chalets, there’s something for everyone. Snow-covered peaks, crisp mountain air, and stunning views create unforgettable memories for travelers looking to escape into nature's majestic beauty.",
+      "category": "Travel",
+      "image": "https://images.unsplash.com/photo-1743484977289-22999cb8c001?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw0fHx8ZW58MHx8fHx8"
+    },
+    {
+      "blogId": "c3b9f39a-99e4-43c1-b7c6-b1b59b19fbd1",
+      "userID": 2,
+      "title": "Street Food in Bangkok",
+      "body": "Wander through Bangkok’s lively streets and discover flavors that will delight your palate. From spicy noodles to sweet mango sticky rice, every vendor has something special. The aroma, sound, and colors of Thai street food create an experience as rich as the flavors themselves.",
+      "category": "Food",
+      "image": "https://plus.unsplash.com/premium_photo-1675862969309-0b705fdcfc8f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyfHx8ZW58MHx8fHx8"
+    },
+    {
+      "blogId": "d5b6acb1-d8a0-441a-b25d-d52f26cce3d8",
+      "userID": 3,
+      "title": "Remote Workspaces",
+      "body": "Remote work has changed how and where we operate. People now work from mountain cabins, beachside cafes, and tiny homes in the woods. This freedom offers inspiration and balance, allowing professionals to connect with nature and work efficiently away from the traditional office setup.",
+      "category": "Lifestyle",
+      "image": "https://images.unsplash.com/photo-1744375212850-cd9da4c1d24d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxNnx8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+      "blogId": "e76d1ab7-74c1-4700-a77f-02c8f1be3cde",
+      "userID": 4,
+      "title": "Top 10 Beaches",
+      "body": "Discover the world’s most stunning beaches, from the soft white sands of the Maldives to the surfer’s paradise in Bali. Perfect for sunbathing, swimming, or just enjoying a peaceful sunset, these beaches offer travelers a slice of paradise in every corner of the world.",
+      "category": "Travel",
+      "image": "https://plus.unsplash.com/premium_photo-1723526592978-91b15f6f983c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDV8NnNNVmpUTFNrZVF8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+      "blogId": "fe9b8e78-51f1-4eb9-b618-bd97585a220b",
+      "userID": 5,
+      "title": "Mastering JavaScript",
+      "body": "JavaScript remains one of the most essential languages for web development. From handling interactivity to powering full-stack applications, its versatility is unmatched. Mastering modern frameworks and techniques like async programming can elevate your skills and open doors to new development opportunities and career growth.",
+      "category": "Tech",
+      "image": "https://plus.unsplash.com/premium_photo-1727534569445-a4137e041cd5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE4fDZzTVZqVExTa2VRfHxlbnwwfHx8fHw%3D"
+    },
+    {
+      "blogId": "ab64c1ba-bd91-46d0-80b3-d8d855cf84da",
+      "userID": 6,
+      "title": "Camping Essentials",
+      "body": "Before you head out into the wilderness, make sure you're fully prepared. From tents and cooking supplies to first-aid kits and weather-ready gear, each item plays a role in a successful trip. Camping is about unplugging, recharging, and reconnecting with nature the right way.",
+      "category": "Adventure",
+      "image": "https://plus.unsplash.com/premium_photo-1701091956254-8f24ea99a53b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI3fDZzTVZqVExTa2VRfHxlbnwwfHx8fHw%3D"
+    },
+    {
+      "blogId": "df7392c9-f342-4452-9e23-3f5415cc4970",
+      "userID": 7,
+      "title": "Exploring Japan’s Cherry Blossoms",
+      "body": "The cherry blossom season in Japan is a magical time of year when the streets and parks are covered in delicate pink and white flowers. This fleeting beauty marks the arrival of spring, drawing crowds of tourists and locals alike to celebrate and appreciate nature’s short-lived perfection.",
+      "category": "Travel",
+      "image": "https://images.unsplash.com/photo-1743309425925-72a2e4dbb8a4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDJ8RnpvM3p1T0hONnd8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+      "blogId": "b2aab918-c52a-4e49-b2f2-1e5cbde2ff68",
+      "userID": 8,
+      "title": "New York City: A Place Like No Other",
+      "body": "New York City is a bustling metropolis known for its iconic landmarks, diverse neighborhoods, and vibrant culture. Whether you’re strolling through Central Park, catching a Broadway show, or indulging in street food, the city offers endless opportunities for adventure and excitement, day or night.",
+      "category": "City Life",
+      "image": "https://images.unsplash.com/photo-1745276243806-273cf314e281?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDZ8RnpvM3p1T0hONnd8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+      "blogId": "bf8b93a5-f734-468b-b07a-504f7bb0c741",
+      "userID": 9,
+      "title": "The Art of Photography",
+      "body": "Photography is not just about capturing moments; it's about telling stories through visuals. A great photograph conveys emotions, showcases beauty, and preserves memories. Whether using a professional camera or a smartphone, anyone can take meaningful photos with the right techniques and a keen eye.",
+      "category": "Art",
+      "image": "https://images.unsplash.com/photo-1744887078747-31d9a636e8f4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE2fEZ6bzN6dU9ITjZ3fHxlbnwwfHx8fHw%3D"
+    },
+    {
+      "blogId": "a9a34742-b71c-459b-99ad-b5a5d9ed01f3",
+      "userID": 10,
+      "title": "Sustainable Fashion",
+      "body": "Sustainable fashion is about making responsible choices that contribute to the environment. From buying eco-friendly materials to supporting fair-trade brands, individuals can reduce their carbon footprint. By opting for timeless pieces instead of fast fashion, you can build a wardrobe that lasts and supports ethical practices.",
+      "category": "Lifestyle",
+      "image": "https://plus.unsplash.com/premium_photo-1744528608240-8f075f24f0c2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDV8dG93SlpGc2twR2d8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+      "blogId": "14db1d24-71c9-44cf-b1e9-6368237d3c77",
+      "userID": 11,
+      "title": "Vegan Recipes You’ll Love",
+      "body": "Veganism isn’t just a lifestyle; it’s about embracing healthier choices. With a wide variety of plant-based foods, you can prepare delicious meals that nourish your body and respect animal welfare. From hearty stews to refreshing salads, these vegan recipes will leave you craving more.",
+      "category": "Food",
+      "image": "https://plus.unsplash.com/premium_photo-1673108852141-e8c3c22a4a22?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Zm9vZHxlbnwwfHwwfHx8MA%3D%3D"
+    },
+    {
+      "blogId": "019e3f5f-b597-4183-ae3c-9c2b3608b208",
+      "userID": 12,
+      "title": "The Future of AI",
+      "body": "Artificial Intelligence is rapidly transforming industries, from healthcare to finance. Its potential to revolutionize how we work and live is vast. As AI systems become more advanced, they will automate tasks, assist in decision-making, and create new opportunities for innovation and efficiency.",
+      "category": "Tech",
+      "image": "https://plus.unsplash.com/premium_photo-1683121716061-3faddf4dc504?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8dGVjaHxlbnwwfHwwfHx8MA%3D%3D"
+    },
+    {
+      "blogId": "56a5bdb1-e8b1-43ad-8c74-63645c092537",
+      "userID": 13,
+      "title": "Hidden Gems of Italy",
+      "body": "Italy is famous for its rich history, art, and cuisine, but there are countless hidden gems waiting to be discovered. From the coastal towns of Cinque Terre to the historic villages of Umbria, these off-the-beaten-path destinations offer a chance to experience Italy like never before.",
+      "category": "Travel",
+      "image": "https://images.unsplash.com/photo-1744479357124-ef43ab9d6a9f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI2fEZ6bzN6dU9ITjZ3fHxlbnwwfHx8fHw%3D"
+    },
+    {
+      "blogId": "d67c91cc-b91d-42b3-88fe-cbc7e056c97d",
+      "userID": 14,
+      "title": "The Science of Happiness",
+      "body": "Happiness is more than a fleeting emotion; it’s a science. Studies have shown that our well-being is affected by a variety of factors, from genetics to environment. Practices like mindfulness, gratitude, and exercise have been shown to improve happiness, creating a more fulfilled and positive life.",
+      "category": "Wellness",
+      "image": "https://plus.unsplash.com/premium_photo-1668424271158-d59b0381425b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8d2VsbG5lc3N8ZW58MHx8MHx8fDA%3D"
+    },
+    {
+      "blogId": "4b0598bc-0228-4428-8e7d-27f4e7553cbe",
+      "userID": 15,
+      "title": "Camping Tips for Beginners",
+      "body": "Camping is a great way to connect with nature, but it can also be intimidating for beginners. From choosing the right gear to understanding campsite etiquette, it’s important to be prepared. With the right knowledge, you can make your camping experience enjoyable and stress-free.",
+      "category": "Adventure",
+      "image": "https://plus.unsplash.com/premium_photo-1682390303366-7463dcbec281?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8QWR2ZW50dXJlfGVufDB8fDB8fHww"
+    },
+    {
+      "blogId": "9b1b7072-0b59-4f2f-8058-7d8f4687e907",
+      "userID": 16,
+      "title": "Virtual Reality in Education",
+      "body": "Virtual Reality (VR) is transforming education, offering students immersive and engaging learning experiences. By stepping into virtual worlds, learners can interact with content in ways that traditional classrooms cannot replicate. From history to science, VR is revolutionizing the way we learn and interact with information.",
+      "category": "Tech",
+      "image": "https://images.unsplash.com/photo-1556742044-3c52d6e88c62?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxzZWFyY2h8OHx8dGVjaHxlbnwwfHwwfHx8MA%3D%3D"
+    },
+    {
+      "blogId": "de1ab8db-85c8-4414-b1b2-62a72d4d0cc5",
+      "userID": 17,
+      "title": "How to Build a Budget",
+      "body": "Building a budget is one of the most important steps to take control of your finances. It helps you track your spending, save for the future, and avoid debt. There are many budgeting methods to choose from, but finding the one that works for you can make managing money much easier.",
+      "category": "Finance",
+      "image": "https://plus.unsplash.com/premium_photo-1672423156257-9a2bc5e1f480?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGZpbmFuY2V8ZW58MHx8MHx8fDA%3D"
+    },
+    {
+      "blogId": "aa433d4c-1232-4451-8a67-e4fae8f79d75",
+      "userID": 18,
+      "title": "The Future of Space Exploration",
+      "body": "Space exploration is on the verge of a new era. With advancements in technology and private companies venturing into space, we are witnessing exciting developments in how we explore the universe. From Mars missions to the moon base projects, humanity's journey into the cosmos has just begun.",
+      "category": "Science",
+      "image": "https://plus.unsplash.com/premium_photo-1661432575489-b0400f4fea58?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c2NpZW5jZXxlbnwwfHwwfHx8MA%3D%3D"
+    },
+    {
+      "blogId": "876fadd6-cc7d-4233-9ef4-99e63d28259f",
+      "userID": 19,
+      "title": "Mental Health Awareness",
+      "body": "Mental health is just as important as physical health, yet it often goes unnoticed. By raising awareness about mental health, we can reduce stigma, provide support, and encourage people to seek help when needed. Creating a culture of openness and acceptance is key to improving overall well-being.",
+      "category": "Health",
+      "image": "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8SGVhbHRofGVufDB8fDB8fHww"
+    },
+    {
+      "blogId": "fc4f6f2d-3fcf-4b51-849d-1ed34859d670",
+      "userID": 20,
+      "title": "Digital Nomad Life",
+      "body": "Being a digital nomad means having the freedom to work from anywhere in the world. Whether you're in a beach hut or a bustling city, the ability to travel while working has become more accessible. This lifestyle requires discipline, flexibility, and the right tools to succeed.",
+      "category": "Lifestyle",
+      "image": "https://images.unsplash.com/photo-1745666890553-68a1098c51ae?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE3fHhIeFlUTUhMZ09jfHxlbnwwfHx8fHw%3D"
+    }
+  ]
+}

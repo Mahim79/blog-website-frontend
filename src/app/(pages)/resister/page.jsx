@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import FormInput from '../../components/FormInput';
+import FormInput from '../../../components/FormInput';
+import { useRegisterUserMutation } from '../../../features/api/apiSlice';
 
 export default function RegisterPage() {
   const [form, setForm] = useState({
@@ -11,16 +12,25 @@ export default function RegisterPage() {
     confirmPassword: '',
   });
 
+  const [registerUser] = useRegisterUserMutation();
+
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     if (form.password !== form.confirmPassword) {
       alert('Passwords do not match');
       return;
     }
     console.log('Register Data', form);
+
+    try {
+      await registerUser(form).unwrap();
+      console.log('Registration Successful');
+    } catch (error) {
+      console.error('Registration Failed:', error);
+    }
   };
 
   return (
@@ -64,7 +74,7 @@ export default function RegisterPage() {
 
         <button
           type="submit"
-          className="w-full mt-4 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded-md transition"
+          className="w-full mt-4 btn hover:bg-deepTeal text-white font-semibold py-2 px-4 rounded-md transition"
         >
           Sign Up
         </button>
