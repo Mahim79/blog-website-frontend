@@ -153,6 +153,24 @@
       "password": "password123",
       "confirmPassword": "password123",
       "id": "N9Oyo2C"
+    },
+    {
+      "name": "sharmina",
+      "email": "sharmina@gmail.com",
+      "password": "password123",
+      "id": "CupyvGz"
+    },
+    {
+      "name": "Habiba",
+      "email": "Habiba@gmail.com",
+      "password": "password123",
+      "id": "-xFAyGD"
+    },
+    {
+      "name": "Shima",
+      "email": "Shima@gmail.com",
+      "password": "password123",
+      "id": "cZagQCW"
     }
   ],
   "blogs": [

@@ -3,12 +3,21 @@
 import { useState, useEffect } from 'react';
 import { useLoginUserQuery } from '@/features/api/apiSlice';
 import FormInput from '../../../components/FormInput';
+import { useRouter } from 'next/navigation';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function LoginPage() {
   const [form, setForm] = useState({ email: '', password: '' });
   const [triggerLogin, setTriggerLogin] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const router = useRouter();
 
-  const { data, isLoading, error, refetch } = useLoginUserQuery(
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const { data, isLoading, error } = useLoginUserQuery(
     { email: form.email, password: form.password },
     { skip: !triggerLogin }
   );
@@ -17,22 +26,46 @@ export default function LoginPage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const isEmailValid = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
   const handleLogin = (e) => {
     e.preventDefault();
+
+    if (!form.email || !form.password) {
+      toast.error('Email and password are required');
+      return;
+    }
+
+    if (!isEmailValid(form.email)) {
+      toast.error('Invalid email format');
+      return;
+    }
+
     setTriggerLogin(true);
-    refetch();
   };
 
   useEffect(() => {
-    if (data && data.length > 0) {
-      alert('Login successful!');
-      console.log('User info:', data[0]);
-    }
+    if (mounted) {
+      if (data && data.length > 0) {
+        toast.success('Login successful! Redirecting...');
+        localStorage.setItem('token', data[0].token);
+        setTimeout(() => {
+          router.push('/dashboard');
+        }, 1500);
+      }
 
-    if (triggerLogin && !isLoading && !error && (!data || data.length === 0)) {
-      alert('Invalid email or password.');
+      if (
+        triggerLogin &&
+        !isLoading &&
+        !error &&
+        (!data || data.length === 0)
+      ) {
+        toast.error('Invalid email or password');
+      }
     }
-  }, [data, isLoading, error, triggerLogin]);
+  }, [data, isLoading, error, triggerLogin, router, mounted]);
+
+  if (!mounted) return null;
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-slate-100 px-4">
@@ -66,6 +99,8 @@ export default function LoginPage() {
           {isLoading ? 'Logging in...' : 'Login'}
         </button>
       </form>
+
+      <ToastContainer position="top-right" autoClose={2000} />
     </section>
   );
 }
