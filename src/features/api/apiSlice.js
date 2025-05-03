@@ -42,5 +42,5 @@ export const {
   useGetUserQuery,
   useGetBlogsQuery,
   useRegisterUserMutation,
-  useLoginUserQuery, // ✅ Correct hook name
+  useLoginUserQuery, 
 } = apiSlice;
