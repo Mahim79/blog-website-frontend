@@ -4,38 +4,36 @@ import Link from "next/link";
 import React from "react";
 
 const LatestBlogCard = ({ blog }) => {
-  //Particular user Api call 
+  //Particular user Api call
   const { data: user } = useGetUserQuery(blog.userID);
-  
+
   return (
     <div>
       <div className="w-72 h-[305px] sm:w-96 mx-auto m-5 relative rounded-lg overflow-hidden">
-        <span className="badge">
-          {blog.category}
-        </span>
+        <span className="badge">{blog.category}</span>
 
-         {/* title  */}
+        {/* title  */}
         <Link
-          href={`blogs/${blog.blogId}`}
+          href={`blogs/${blog.id}`}
           className="font-semibold hover:underline block text-lg"
         >
           {blog.title}
         </Link>
-        <Image
-          src={blog?.image}
-          width={200}
-          height={200}
-          alt="cover"
-          className="w-full h-44 rounded-lg border-b"
-        />
-
+        <Link href={`blogs/${blog.id}`}>
+          <Image
+            src={blog?.image}
+            width={200}
+            height={200}
+            alt="cover"
+            className="w-full h-44 rounded-lg border-b"
+          />
+        </Link>
         <div className=" pt-1 w-full flex justify-center gap-1">
           {/* go to user profile  */}
           <Link
-            href={"/user"}
+            href={`/user/${blog.userID}`}
             className=" flex justify-center items-center gap-1"
           >
-            
             {/* profile Image  */}
             <Image
               src={user?.image}
@@ -48,7 +46,7 @@ const LatestBlogCard = ({ blog }) => {
           </Link>
           <p>| 30 min ago</p>
         </div>
-        
+
         {/* Description  */}
         <p className=" text-justify text-sm p-2 line-clamp-2">{blog.body}</p>
       </div>

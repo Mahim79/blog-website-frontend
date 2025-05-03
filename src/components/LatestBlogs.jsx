@@ -46,7 +46,7 @@ const LatestBlog = () => {
   }
   if (blogs?.length > 0) {
     content = blogs?.map((blog) => (
-      <LatestBlogCard key={blog.blogId} blog={blog} />
+      <LatestBlogCard key={blog.id} blog={blog} />
     ));
   }
 

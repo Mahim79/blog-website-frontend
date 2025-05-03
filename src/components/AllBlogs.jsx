@@ -48,7 +48,7 @@ const AllBlogs = () => {
     );
   }
   if (blogs?.length > 0) {
-    content = blogs?.map((blog) => <BlogCard key={blog.blogId} blog={blog} />);
+    content = blogs?.map((blog) => <BlogCard key={blog.id} blog={blog} />);
   }
   return (
     <div>

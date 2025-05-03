@@ -47,8 +47,8 @@ const TopAuthors = () => {
           Top Authors
         </h2>
         <div className="px-4 py-2 w-full max-h-96 mt-5 rounded-md bg-slate-100 overflow-auto flex md:flex-col gap-4 items-center md:items-start justify-start">
-          {authors.map((author) => (
-            <div
+          {authors?.map((author) => (
+            <Link href={`/user/${author?.id}`}
               key={author.id}
               className="flex mb-2 md:flex-row gap-2 flex-col justify-center w-max items-center"
             >
@@ -60,12 +60,12 @@ const TopAuthors = () => {
                 className="w-5 h-5 rounded-full bg-black overflow-hidden"
               />
               <Link
-                href={"/user"}
+                href={`/user/${author?.id}`}
                 className="text-sm text-nowrap font-semibold hover:underline"
               >
                 {author.name}
               </Link>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
