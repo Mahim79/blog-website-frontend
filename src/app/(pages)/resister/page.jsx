@@ -2,6 +2,10 @@
 
 import { useState } from 'react';
 import FormInput from '../../../components/FormInput';
+import { useRegisterUserMutation } from '../../../features/api/apiSlice';
+import { useRouter } from 'next/navigation';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function RegisterPage() {
   const [form, setForm] = useState({
@@ -11,16 +15,58 @@ export default function RegisterPage() {
     confirmPassword: '',
   });
 
+  const [registerUser, { isLoading }] = useRegisterUserMutation();
+  const router = useRouter();
+
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleRegister = (e) => {
+  const isEmailValid = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const handleRegister = async (e) => {
     e.preventDefault();
-    if (form.password !== form.confirmPassword) {
-      alert('Passwords do not match');
+
+
+    if (!form.name || !form.email || !form.password || !form.confirmPassword) {
+      toast.error('All fields are required');
       return;
     }
-    console.log('Register Data', form);
+
+    if (!isEmailValid(form.email)) {
+      toast.error('Invalid email format');
+      return;
+    }
+
+    if (form.password.length < 6) {
+      toast.error('Password must be at least 6 characters');
+      return;
+    }
+
+    if (form.password !== form.confirmPassword) {
+      toast.error('Passwords do not match');
+      return;
+    }
+
+    try {
+      const response = await registerUser({
+        name: form.name,
+        email: form.email,
+        password: form.password,
+      }).unwrap();
+
+    
+      if (response?.token) {
+        localStorage.setItem('token', response.token);
+      }
+
+      toast.success('Registration Successful! Redirecting...');
+      setTimeout(() => {
+        router.push('/');
+      }, 1500);
+    } catch (error) {
+      console.error('Registration Failed:', error);
+      toast.error('Registration failed. Try again.');
+    }
   };
 
   return (
@@ -64,11 +110,14 @@ export default function RegisterPage() {
 
         <button
           type="submit"
+          disabled={isLoading}
           className="w-full mt-4 btn hover:bg-deepTeal text-white font-semibold py-2 px-4 rounded-md transition"
         >
-          Sign Up
+          {isLoading ? 'Signing Up...' : 'Sign Up'}
         </button>
       </form>
+
+      <ToastContainer position="top-right" autoClose={2000} />
     </section>
   );
 }
