@@ -1,26 +1,18 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useLoginUserQuery } from '@/features/api/apiSlice';
-import FormInput from '../../../components/FormInput';
-import { useRouter } from 'next/navigation';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { useState, useEffect } from "react";
+import { useLoginUserMutation } from "@/features/api/apiSlice";
+import FormInput from "../../../components/FormInput";
+import { useRouter } from "next/navigation";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function LoginPage() {
-  const [form, setForm] = useState({ email: '', password: '' });
-  const [triggerLogin, setTriggerLogin] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const [form, setForm] = useState({ email: "", password: "" });
+
   const router = useRouter();
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const { data, isLoading, error } = useLoginUserQuery(
-    { email: form.email, password: form.password },
-    { skip: !triggerLogin }
-  );
+  const [loginUser, { isLoading }] = useLoginUserMutation();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -28,44 +20,33 @@ export default function LoginPage() {
 
   const isEmailValid = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     if (!form.email || !form.password) {
-      toast.error('Email and password are required');
+      toast.error("Email and password are required");
       return;
     }
 
     if (!isEmailValid(form.email)) {
-      toast.error('Invalid email format');
+      toast.error("Invalid email format");
       return;
     }
 
-    setTriggerLogin(true);
-  };
+    try {
+      const response = await loginUser({
+        email: form.email,
+        password: form.password,
+      }).unwrap(); // get raw response or throw error
+      console.log(response);
 
-  useEffect(() => {
-    if (mounted) {
-      if (data && data.length > 0) {
-        toast.success('Login successful! Redirecting...');
-        localStorage.setItem('token', data[0].token);
-        setTimeout(() => {
-          router.push('/dashboard');
-        }, 1500);
-      }
-
-      if (
-        triggerLogin &&
-        !isLoading &&
-        !error &&
-        (!data || data.length === 0)
-      ) {
-        toast.error('Invalid email or password');
-      }
+      toast.success("Login successful! Redirecting...");
+      localStorage.setItem("token", response.token);
+      router.push("/");
+    } catch (err) {
+      toast.error("Invalid email or password");
     }
-  }, [data, isLoading, error, triggerLogin, router, mounted]);
-
-  if (!mounted) return null;
+  };
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-slate-100 px-4">
@@ -96,7 +77,7 @@ export default function LoginPage() {
           type="submit"
           className="w-full mt-4 btn hover:bg-deepTeal text-white font-semibold py-2 px-4 rounded-md transition"
         >
-          {isLoading ? 'Logging in...' : 'Login'}
+          {isLoading ? "Logging in..." : "Login"}
         </button>
       </form>
 
