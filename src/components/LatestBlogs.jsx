@@ -43,7 +43,7 @@ const LatestBlog = () => {
     content = (
       <div className="my-5">
         <h2 className=" mx-5 mt-10 text-3xl text-center font-semibold">
-          There are no blog
+          There is no blogs
         </h2>
       </div>
     );
