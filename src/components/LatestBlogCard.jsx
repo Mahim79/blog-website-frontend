@@ -1,11 +1,14 @@
 import { useGetUserQuery } from "@/features/api/apiSlice";
+import { publishDate } from "@/utils/PublishDate";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 const LatestBlogCard = ({ blog }) => {
   //Particular user Api call
-  const { data: user } = useGetUserQuery(blog.userID);
+  const { data: user } = useGetUserQuery(blog.author);
+
+  const publishedAgo = publishDate(blog.createdAt);
 
   return (
     <div>
@@ -14,12 +17,12 @@ const LatestBlogCard = ({ blog }) => {
 
         {/* title  */}
         <Link
-          href={`blogs/${blog.id}`}
+          href={`blogs/${blog._id}`}
           className="font-semibold hover:underline block text-lg"
         >
           {blog.title}
         </Link>
-        <Link href={`blogs/${blog.id}`}>
+        <Link href={`blogs/${blog._id}`}>
           <Image
             src={blog?.image}
             width={200}
@@ -31,24 +34,26 @@ const LatestBlogCard = ({ blog }) => {
         <div className=" pt-1 w-full flex justify-center gap-1">
           {/* go to user profile  */}
           <Link
-            href={`/user/${blog.userID}`}
+            href={`/user/${blog.author}`}
             className=" flex justify-center items-center gap-1"
           >
             {/* profile Image  */}
             <Image
-              src={user?.image}
+              src={user?.profilePicture}
               alt="author"
               width={100}
               height={100}
               className="w-5 h-5 rounded-full bg-black overflow-hidden"
             />
-            <p className="text-sm hover:underline">{user?.name} </p>
+            <p className="text-sm hover:underline">{user?.username} </p>
           </Link>
-          <p>| 30 min ago</p>
+          <p>| {publishedAgo}</p>
         </div>
 
         {/* Description  */}
-        <p className=" text-justify text-sm p-2 line-clamp-2">{blog.body}</p>
+        <p className=" text-justify text-sm p-2 line-clamp-2">
+          {blog?.summary}
+        </p>
       </div>
     </div>
   );

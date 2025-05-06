@@ -3,31 +3,46 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const apiSlice = createApi({
 
     reducerPath:"api",
-    baseQuery:fetchBaseQuery({baseUrl:"http://localhost:4000/"}),
+    baseQuery:fetchBaseQuery({baseUrl:"https://ic-blog-api.vercel.app"}),
     endpoints:(builder)=>({
+        // Get all users
         getUsers : builder.query({
-            query: ()=> "users"
+            query: ()=> "/api/user/top-authors"
         }),
+        // Get Single user
         getUser : builder.query({
-            query: (id)=> `users/${id}`
+            query: (id)=> `/api/user/details/${id}`
         }),
+        // Get all blogs
         getBlogs: builder.query({
             query:(data)=> {
-                if(data.limit){
-                    return `blogs?_limit=${data.limit}`
+                if(data.popular){
+                    return `/api/blog/popular-blogs`
                 }if(data.category){
-                    return `blogs?category=${data.category}`
+                    return `/api/blog/category/${data.category}`
                 }if(data.userID){
-                    return `blogs?userID=${data.userID}`
+                    return `/api/blog/author/${data.userID}`
                 }
-                return "blogs"
+                return "/api/blog/all-blog"
             }
         }),
+        // Get single blog
         getBlog: builder.query({
-            query:(id)=> `blogs/${id}`
+            query:(id)=> `/api/blog/single-blog/${id}`
+        }),
+        // Get blog categories
+        getBlogCategories: builder.query({
+            query:()=> `/api/blog/categories`
+        }),
+        createBlog: builder.mutation({
+            query:(data)=> ({
+                url:`/api/blog/create-blog`,
+                method:"POST",
+                body:JSON.stringify(data)
+            })
         }),
         relatedBlogs: builder.query({
-            query:(category)=> `blogs?category=${category}`
+            query:(category)=> `/api/blog/category/${category}`
         }),
       registerUser: builder.mutation({
       query: (newUser) => ({
@@ -46,7 +61,7 @@ const apiSlice = createApi({
 })
 
 export default apiSlice
-export const {useGetUsersQuery,useGetUserQuery,useGetBlogsQuery, useGetBlogQuery, useRelatedBlogsQuery,useRegisterUserMutation,
+export const {useGetUsersQuery,useGetUserQuery,useGetBlogsQuery, useGetBlogQuery, useGetBlogCategoriesQuery , useCreateBlogMutation, useRelatedBlogsQuery,useRegisterUserMutation,
   useLoginUserQuery, } = apiSlice
 
  

@@ -2,6 +2,7 @@
 import CommentBox from "@/components/CommentBox";
 import RelatedBlogs from "@/components/RelatedBlogs";
 import { useGetBlogQuery, useGetUserQuery } from "@/features/api/apiSlice";
+import { publishDate } from "@/utils/PublishDate";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -14,9 +15,12 @@ const BlogDetails = () => {
   const [like, setLike] = useState(false);
   const [commentBox, setCommentBox] = useState(false);
   const { id } = useParams();
-  const { data: blog } = useGetBlogQuery(id);
-  const { data: author } = useGetUserQuery(blog?.userID);
-
+  const { data: singleBlog } = useGetBlogQuery(id);
+  const { data: author } = useGetUserQuery(singleBlog?.data?.author);
+  const blog = singleBlog?.data
+  const publishedAgo = publishDate(blog?.createdAt)
+  console.log(author,blog);
+  
   return (
     <div>
       <div className="mx-auto w-[320px]  sm:w-4/5 p-5">
@@ -58,32 +62,32 @@ const BlogDetails = () => {
 
           {/* Author  */}
           <Link
-            href={`/user/${blog?.userID}`}
+            href={`/user/${blog?.author}`}
             className="flex items-center gap-2 self-center"
           >
             <Image
-              src={author?.image}
+              src={author?.profilePicture}
               width={50}
               height={50}
               alt="profile"
               className="w-8 h-8 rounded-full"
             />
-            <Link href={`/user/${blog?.userID}`} className="hover:underline">
-              {author?.name}
+            <Link href={`/user/${blog?.author}`} className="hover:underline">
+              {author?.username}
             </Link>
           </Link>
 
           {/* Publish Time  */}
           <div className="flex items-center gap-2 self-center">
             <IoIosTimer className="text-teal" />
-            <p>Publish Time</p>
+            <p>{publishedAgo}</p>
           </div>
         </div>
 
         {/* comment box */}
         <div>{commentBox && <CommentBox />}</div>
 
-        <div className="">{blog?.body}</div>
+        <div className="">{blog?.content}</div>
       </div>
       <h2 className="font-bold m-5 md:mt-10 text-xl underline underline-offset-4 text-center decoration-teal">
         Related Blogs

@@ -5,15 +5,15 @@ import { useRelatedBlogsQuery } from "@/features/api/apiSlice";
 const RelatedBlogs = ({ blog }) => {
   const { data: blogs } = useRelatedBlogsQuery(blog?.category);
   console.log(blogs);
-  const filteredBlogs = blogs?.filter(b => b.id !== blog.id)
+  // const filteredBlogs = blogs?.filter(b => b.id !== blog.id)
 
   return (
     <div className="grid md:grid-cols-2 xl:grid-cols-3 w-full mx-auto">
-      {filteredBlogs?.map((blog) => (
+      {blogs?.data?.map((blog) => (
         <BlogCard key={blog?.id} blog={blog} />
       ))}
     </div>
   );
 };
-
+ 
 export default RelatedBlogs;

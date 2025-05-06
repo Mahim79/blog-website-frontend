@@ -7,12 +7,17 @@ import { useGetUsersQuery } from "@/features/api/apiSlice";
 // User's Api call
 const TopAuthors = () => {
   const {
-    data: authors,
+    data: allUsers,
     isError,
     isLoading,
     error,
     isSuccess,
   } = useGetUsersQuery();
+
+  const authors = allUsers?.data
+
+  console.log(authors);
+  
 
   // Conditionally Rendered
   let content;
@@ -48,22 +53,22 @@ const TopAuthors = () => {
         </h2>
         <div className="px-4 py-2 w-full max-h-96 mt-5 rounded-md bg-slate-100 overflow-auto flex md:flex-col gap-4 items-center md:items-start justify-start">
           {authors?.map((author) => (
-            <Link href={`/user/${author?.id}`}
+            <Link href={`/user/${author?.author?._id}`}
               key={author.id}
               className="flex mb-2 md:flex-row gap-2 flex-col justify-center w-max items-center"
             >
               <Image
-                src={author.image}
+                src={author?.author?.profilePicture}
                 alt="profile"
                 width={100}
                 height={100}
                 className="w-5 h-5 rounded-full bg-black overflow-hidden"
               />
               <Link
-                href={`/user/${author?.id}`}
+                href={`/user/${author?.author?._id}`}
                 className="text-sm text-nowrap font-semibold hover:underline"
               >
-                {author.name}
+                {author?.author?.username}
               </Link>
             </Link>
           ))}

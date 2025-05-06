@@ -6,17 +6,21 @@ import LatestBlogCard from "./LatestBlogCard";
 const LatestBlog = () => {
   // Blogs api call
   const {
-    data: blogs,
+    data: popularBlogs,
     isError,
     isLoading,
     error,
     isSuccess,
-  } = useGetBlogsQuery({limit:4}, {
-    refetchOnMountOrArgChange: true,
-  });
+  } = useGetBlogsQuery(
+    { popular: true },
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  );
 
+  const blogs = popularBlogs?.data;
   console.log(blogs);
-  
+
   // Conditionally Rendered
   let content;
   if (isLoading) {
@@ -46,7 +50,7 @@ const LatestBlog = () => {
   }
   if (blogs?.length > 0) {
     content = blogs?.map((blog) => (
-      <LatestBlogCard key={blog.id} blog={blog} />
+      <LatestBlogCard key={blog._id} blog={blog.blog} />
     ));
   }
 

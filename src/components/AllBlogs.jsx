@@ -9,7 +9,7 @@ const AllBlogs = () => {
   const category = searceParams.get("category");
 
   const {
-    data: blogs,
+    data: allBlogs,
     isLoading,
     isError,
     error,
@@ -20,6 +20,11 @@ const AllBlogs = () => {
       refetchOnMountOrArgChange: true,
     }
   );
+
+  const blogs = allBlogs?.data
+  
+  console.log(blogs);
+  
 
   let content;
   if (isLoading) {
