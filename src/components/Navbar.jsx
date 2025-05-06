@@ -6,11 +6,26 @@ import Link from "next/link";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { usePathname } from "next/navigation";
+import { useUserDetails } from "@/features/hooks/useUser";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Navbar = () => {
   const [slidebar, setSlidebar] = useState(false);
+
+  const { userDetails, setUserDetails } = useUserDetails();
+
+  const router = useRouter();
+
   const pathname = usePathname();
-  console.log(slidebar);
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setUserDetails({});
+    router.push("/login");
+    toast.success("Logout successful! Redirecting to login page...");
+  };
+  // console.log(slidebar);
 
   return (
     <div className="sticky top-0 z-50">
@@ -126,24 +141,48 @@ const Navbar = () => {
                 </Link>
               </li>
               <li onClick={() => setSlidebar(false)}>
-                <Link
-                  className={` py-2 px-3 font-semibold ${
-                    pathname === "/login" && "btn "
-                  }`}
-                  href={"/login"}
-                >
-                  Login
-                </Link>
+                {userDetails.username ? (
+                  <Link
+                    className={` py-2 px-3 font-semibold border border-bottom ${
+                      pathname === "/login" && "btn "
+                    }`}
+                    href={
+                      userDetails.role === "admin"
+                        ? `/admin/${userDetails._id}`
+                        : `/user/${userDetails._id}`
+                    }
+                  >
+                    {userDetails.username}
+                  </Link>
+                ) : (
+                  <Link
+                    className={` py-2 px-3 font-semibold border border-slate-950  ${
+                      pathname === "/login" && "btn "
+                    }`}
+                    href={"/login"}
+                  >
+                    Login
+                  </Link>
+                )}
               </li>
               <li onClick={() => setSlidebar(false)}>
-                <Link
-                  className={` py-2 px-3 font-semibold ${
-                    pathname === "/resister" && "btn "
-                  }`}
-                  href={"/resister"}
-                >
-                  Sign Up
-                </Link>
+                {userDetails.username ? (
+                  <div
+                    className={` py-2 px-3 font-semibold border border-slate-950 cursor-pointer `}
+                    onClick={handleLogout}
+                  >
+                    logout
+                  </div>
+                ) : (
+                  <Link
+                    className={` py-2 px-3 font-semibold  border border-slate-950  ${
+                      pathname === "/resister" && "btn "
+                    }`}
+                    href={"/resister"}
+                  >
+                    Sign Up
+                  </Link>
+                )}
               </li>
             </ul>
           </header>

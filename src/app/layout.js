@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "../components/Navbar";
 import { Montserrat } from "next/font/google";
 import { Providers } from "@/store/provider";
+import UserProvider from "@/features/provider/UserProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,10 +35,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${montserrat.className} ${geistMono.variable} bg-white text-black`}>
-       <Providers>
-       <Navbar/>
-       {children}
-       </Providers>
+        <Providers>
+          <UserProvider >
+            <Navbar />
+            {children}
+          </UserProvider>
+        </Providers>
       </body>
     </html>
   );

@@ -13,6 +13,7 @@ import {
 
 const UserID = () => {
   const { userID } = useParams();
+  
   const { data: user } = useGetUserQuery(userID);
   const {data:blogs} = useGetBlogsQuery({userID})
 

@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { getToken } from './../utils/getToken';
 
 const apiSlice = createApi({
 
@@ -6,25 +7,25 @@ const apiSlice = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: "https://ic-blog-api.vercel.app/api/" }),
     endpoints: (builder) => ({
         getUsers: builder.query({
-            query: () => "users"
+            query: () => ({
+                url: "users",
+                method: "GET",
+                // headers: getToken(),
+            })
         }),
         getUser: builder.query({
-            query: (id) => `users/${id}`
+            query: (id) => `user/details/${id}`
         }),
         getBlogs: builder.query({
             query: (data) => {
-                if (data.limit) {
-                    return `blogs?_limit=${data.limit}`
-                } if (data.category) {
-                    return `blogs?category=${data.category}`
-                } if (data.userID) {
-                    return `blogs?userID=${data.userID}`
+                if (data.limit && data.page) {
+                    return `blog/all-blog/pagination?page=${data.page}&limit=${data.limit}`
                 }
                 return "blogs"
             }
         }),
         getBlog: builder.query({
-            query: (id) => `blogs/${id}`
+            query: (id) => `blog/single-blog/${id}`
         }),
         relatedBlogs: builder.query({
             query: (category) => `blogs?category=${category}`
