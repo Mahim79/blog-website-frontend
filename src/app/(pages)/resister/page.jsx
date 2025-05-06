@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import FormInput from '../../../components/FormInput';
-import { useRegisterUserMutation } from '../../../features/api/apiSlice';
 import { useRouter } from 'next/navigation';
+import { useRegisterUserMutation } from '@/features/api/apiSlice';
+import FormInput from '../../../components/FormInput';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -15,8 +15,8 @@ export default function RegisterPage() {
     confirmPassword: '',
   });
 
-  const [registerUser, { isLoading }] = useRegisterUserMutation();
   const router = useRouter();
+  const [registerUser, { isLoading }] = useRegisterUserMutation();
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -25,7 +25,6 @@ export default function RegisterPage() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-
 
     if (!form.name || !form.email || !form.password || !form.confirmPassword) {
       toast.error('All fields are required');
@@ -54,17 +53,10 @@ export default function RegisterPage() {
         password: form.password,
       }).unwrap();
 
-    
-      if (response?.token) {
-        localStorage.setItem('token', response.token);
-      }
-
-      toast.success('Registration Successful! Redirecting...');
-      setTimeout(() => {
-        router.push('/');
-      }, 1500);
+      localStorage.setItem('token', response.token);
+      toast.success('Registration successful! Redirecting...');
+      router.push('/');
     } catch (error) {
-      console.error('Registration Failed:', error);
       toast.error('Registration failed. Try again.');
     }
   };
