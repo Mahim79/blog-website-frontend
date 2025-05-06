@@ -1,7 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/Navbar";
+import Navbar from "../components/Navbar";
 import { Montserrat } from "next/font/google";
+import { Providers } from "@/store/provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,8 +34,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${montserrat.className} ${geistMono.variable} bg-white text-black`}>
-        <Navbar/>
-        {children}
+       <Providers>
+       <Navbar/>
+       {children}
+       </Providers>
       </body>
     </html>
   );

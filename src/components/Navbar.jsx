@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React, { useState } from "react";
-import logo from "../../../public/logo.png";
+import logo from "../../public/logo.png";
 import Link from "next/link";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoCloseCircleOutline } from "react-icons/io5";
@@ -13,8 +13,8 @@ const Navbar = () => {
   console.log(slidebar);
 
   return (
-    <div>
-      <div className="bg-slate-100 p-4 flex items-center justify-between">
+    <div className="sticky top-0 z-50">
+      <div className="bg-slate-100 p-4 flex items-center justify-between ">
         <Image src={logo} alt="NoteBook" className="w-32" />
 
         {/* Menu Icon  */}
@@ -26,7 +26,7 @@ const Navbar = () => {
         {/*  Menubar Slider for Mobile  */}
         {
           <header
-            className={`min-h-full md:hidden bg-slate-100 fixed top-0 w-1/2 right-0 pt-20 px-8 transition-all ${
+            className={`min-h-full md:hidden z-50 bg-slate-100 fixed top-0 w-1/2 right-0 pt-20 px-8 transition-all ${
               !slidebar ? "translate-x-96" : "translate-x-0"
             } `}
           >
