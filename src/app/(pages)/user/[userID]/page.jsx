@@ -13,9 +13,15 @@ import {
 
 const UserID = () => {
   const { userID } = useParams();
+<<<<<<< HEAD
   const { data: user, isLoading, isError, isSuccess } = useGetUserQuery(userID);
   const { data: blogs } = useGetBlogsQuery({ userID });
   const [createBlog, setCreateBlog] = useState(false);
+=======
+  
+  const { data: user } = useGetUserQuery(userID);
+  const {data:blogs} = useGetBlogsQuery({userID})
+>>>>>>> admin-panel
 
   return isLoading ? (
     <h2 className="min-w-full min-h-[70vh] flex items-center justify-center">

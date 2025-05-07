@@ -1,68 +1,103 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { getToken } from './../utils/getToken';
+
 
 const apiSlice = createApi({
 
-    reducerPath:"api",
-    baseQuery:fetchBaseQuery({baseUrl:"https://ic-blog-api.vercel.app"}),
-    endpoints:(builder)=>({
-        // Get all users
-        getUsers : builder.query({
-            query: ()=> "/api/user/top-authors"
+    reducerPath: "api",
+    baseQuery: fetchBaseQuery({ baseUrl: "https://ic-blog-api.vercel.app/api/" }),
+    endpoints: (builder) => ({
+        getUsers: builder.query({
+            query: () => ({
+                url: "users",
+                method: "GET",
+                // headers: getToken(),
+            })
         }),
-        // Get Single user
-        getUser : builder.query({
-            query: (id)=> `/api/user/details/${id}`
+        getUser: builder.query({
+            query: (id) => `user/details/${id}`
         }),
         // Get all blogs
         getBlogs: builder.query({
-            query:(data)=> {
-                if(data.popular){
-                    return `/api/blog/popular-blogs`
-                }if(data.category){
-                    return `/api/blog/category/${data.category}`
-                }if(data.userID){
-                    return `/api/blog/author/${data.userID}`
+            query: (data) => {
+                if (data.limit && data.page) {
+                    return `blog/all-blog/pagination?page=${data.page}&limit=${data.limit}`
                 }
+
                 return "/api/blog/all-blog"
             }
         }),
         // Get single blog
+        getBlogsAdmin: builder.query({
+            query: (data) => {
+                const token = getToken();
+                console.log(token)
+                const url = (data.limit && data.page)
+                    ? `blog/all-blog/pagination/admin?page=${data.page}&limit=${data.limit}`
+                    : "blogs";
+
+                return {
+                    url,
+                    headers: {
+                        ...token
+                    }
+                };
+            }
+        }),
+
         getBlog: builder.query({
-            query:(id)=> `/api/blog/single-blog/${id}`
+            query: (id) => `blog/single-blog/${id}`
         }),
-        // Get blog categories
-        getBlogCategories: builder.query({
-            query:()=> `/api/blog/categories`
+        getBlogAdmin: builder.query({
+            query: (id) => {
+                return {
+                    url: `blog/single-blog/admin/${id}`,
+                    headers: {
+                        ...getToken()
+                    }
+                };
+            }
         }),
-        createBlog: builder.mutation({
-            query:(data)=> ({
-                url:`/api/blog/create-blog`,
-                method:"POST",
-                body:JSON.stringify(data)
+        updateBlog: builder.mutation({
+            query: ({ id, ...data }) => ({
+                url: `blog/update-blog/${id}`,
+                method: "PUT",
+                body: data,
+                headers: {
+                    ...getToken()
+                }
             })
         }),
-        relatedBlogs: builder.query({
-            query:(category)=> `/api/blog/category/${category}`
+        getAllCategories: builder.query({
+            query: () => "blog/categories"
         }),
-      registerUser: builder.mutation({
-      query: (newUser) => ({
-        url: '/users',
-        method: 'POST',
-        body: newUser,
-      }),
+
+        relatedBlogs: builder.query({
+            query: (category) => `/api/blog/category/${category}`
+        }),
+        registerUser: builder.mutation({
+            query: (newUser) => ({
+                url: '/users',
+                method: 'POST',
+                body: newUser,
+            }),
+        }),
+        loginUser: builder.mutation({
+            query: ({ email, password }) =>
+            ({
+                url: "auth/login",
+                method: "POST",
+                body: { email, password }
+            })
+        })
     }),
-      loginUser: builder.query({
-      query: ({ email, password }) =>
-        `users?email=${email}&password=${password}`,
-    }),
-        
-        
-    })
+
+
 })
 
 export default apiSlice
-export const {useGetUsersQuery,useGetUserQuery,useGetBlogsQuery, useGetBlogQuery, useGetBlogCategoriesQuery , useCreateBlogMutation, useRelatedBlogsQuery,useRegisterUserMutation,
-  useLoginUserQuery, } = apiSlice
+export const { useGetUsersQuery, useGetUserQuery, useGetBlogsQuery, useGetBlogQuery, useGetBlogCategoriesQuery , useCreateBlogMutation, useRelatedBlogsQuery, useRegisterUserMutation,
+    useLoginUserMutation, useGetBlogsAdminQuery, useGetBlogAdminQuery, useUpdateBlogMutation,useGetAllCategoriesQuery } = apiSlice
 
- 
+
 

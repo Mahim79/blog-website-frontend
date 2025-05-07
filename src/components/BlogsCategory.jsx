@@ -1,13 +1,12 @@
 "use client";
 
-import { useGetBlogCategoriesQuery } from "@/features/api/apiSlice";
+import { useGetAllCategoriesQuery } from "@/features/api/apiSlice";
 import Link from "next/link";
 import React, { useState } from "react";
 
-
 const BlogsCategory = () => {
   const [activeCategory, setActiveCategory] = useState("All");
-  const { data: categories } = useGetBlogCategoriesQuery();
+  const { data: categories } = useGetAllCategoriesQuery();
 
   return (
     <div className="max-h-full">
