@@ -9,7 +9,9 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function RegisterPage() {
   const [form, setForm] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
+    username: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -26,35 +28,49 @@ export default function RegisterPage() {
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    if (!form.name || !form.email || !form.password || !form.confirmPassword) {
+    const { firstName, lastName, username, email, password, confirmPassword } =
+      form;
+
+    if (
+      !firstName ||
+      !lastName ||
+      !username ||
+      !email ||
+      !password ||
+      !confirmPassword
+    ) {
       toast.error('All fields are required');
       return;
     }
 
-    if (!isEmailValid(form.email)) {
+    if (!isEmailValid(email)) {
       toast.error('Invalid email format');
       return;
     }
 
-    if (form.password.length < 6) {
+    if (password.length < 6) {
       toast.error('Password must be at least 6 characters');
       return;
     }
 
-    if (form.password !== form.confirmPassword) {
+    if (password !== confirmPassword) {
       toast.error('Passwords do not match');
       return;
     }
 
     try {
       const response = await registerUser({
-        name: form.name,
-        email: form.email,
-        password: form.password,
+        firstName,
+        lastName,
+        username,
+        email,
+        password,
       }).unwrap();
 
       localStorage.setItem('token', response.token);
-      toast.success('Registration successful! Redirecting...');
+      toast.success(
+        'Registration successful! Please check your email to verify your account.'
+      );
       router.push('/');
     } catch (error) {
       toast.error('Registration failed. Try again.');
@@ -62,7 +78,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-slate-100 px-4">
+    <section className="min-h-screen flex items-center justify-center bg-slate-100 px-4 py-14">
       <form
         onSubmit={handleRegister}
         className="bg-white shadow-md rounded-lg p-8 w-full max-w-md"
@@ -72,10 +88,24 @@ export default function RegisterPage() {
         </h2>
 
         <FormInput
-          label="Name"
-          name="name"
+          label="First Name"
+          name="firstName"
           type="text"
-          value={form.name}
+          value={form.firstName}
+          onChange={handleChange}
+        />
+        <FormInput
+          label="Last Name"
+          name="lastName"
+          type="text"
+          value={form.lastName}
+          onChange={handleChange}
+        />
+        <FormInput
+          label="Username"
+          name="username"
+          type="text"
+          value={form.username}
           onChange={handleChange}
         />
         <FormInput
