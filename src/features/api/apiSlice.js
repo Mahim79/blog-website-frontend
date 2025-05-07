@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { getToken } from './../utils/getToken';
 
+
 const apiSlice = createApi({
 
     reducerPath: "api",
@@ -21,12 +22,54 @@ const apiSlice = createApi({
                 if (data.limit && data.page) {
                     return `blog/all-blog/pagination?page=${data.page}&limit=${data.limit}`
                 }
+
                 return "blogs"
             }
         }),
+        getBlogsAdmin: builder.query({
+            query: (data) => {
+                const token = getToken();
+                console.log(token)
+                const url = (data.limit && data.page)
+                    ? `blog/all-blog/pagination/admin?page=${data.page}&limit=${data.limit}`
+                    : "blogs";
+
+                return {
+                    url,
+                    headers: {
+                        ...token
+                    }
+                };
+            }
+        }),
+
         getBlog: builder.query({
             query: (id) => `blog/single-blog/${id}`
         }),
+        getBlogAdmin: builder.query({
+            query: (id) => {
+                return {
+                    url: `blog/single-blog/admin/${id}`,
+                    headers: {
+                        ...getToken()
+                    }
+                };
+            }
+        }),
+        updateBlog: builder.mutation({
+            query: ({ id, ...data }) => ({
+                url: `blog/update-blog/${id}`,
+                method: "PUT",
+                body: data,
+                headers: {
+                    ...getToken()
+                }
+            })
+        }),
+        getAllCategories: builder.query({
+            query: () => "blog/categories"
+        }),
+
         relatedBlogs: builder.query({
             query: (category) => `blogs?category=${category}`
         }),
@@ -50,10 +93,9 @@ const apiSlice = createApi({
 
 })
 
-
 export default apiSlice
 export const { useGetUsersQuery, useGetUserQuery, useGetBlogsQuery, useGetBlogQuery, useRelatedBlogsQuery, useRegisterUserMutation,
-    useLoginUserMutation, } = apiSlice
+    useLoginUserMutation, useGetBlogsAdminQuery, useGetBlogAdminQuery, useUpdateBlogMutation,useGetAllCategoriesQuery } = apiSlice
 
 
 

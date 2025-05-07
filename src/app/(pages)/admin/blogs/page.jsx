@@ -3,13 +3,13 @@ import React from "react";
 import Link from "next/link";
 import Loader from "@/components/Loader";
 import BlogItem from "@/components/admin/BlogItem";
-const { useGetBlogsQuery } = require("@/features/api/apiSlice");
+const { useGetBlogsAdminQuery } = require("@/features/api/apiSlice");
 
 export default function BlogPage() {
   const [page, setPage] = React.useState(1);
   const [limit] = React.useState(10);
 
-  const { data, error, isLoading } = useGetBlogsQuery({ page, limit });
+  const { data, error, isLoading } = useGetBlogsAdminQuery({ page, limit });
 
   if (isLoading) return <Loader />;
 
