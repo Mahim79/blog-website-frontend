@@ -1,20 +1,35 @@
 "use client";
-import { useGetUserQuery } from "@/features/api/apiSlice";
+import {
+  useDeleteBlogMutation,
+  useGetUserQuery,
+} from "@/features/api/apiSlice";
 import { publishDate } from "@/utils/PublishDate";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import { FaEllipsisH, FaEllipsisV } from "react-icons/fa";
+import { FaEllipsisV } from "react-icons/fa";
 import { IoIosTimer } from "react-icons/io";
+import { useDispatch } from "react-redux";
+import { openEdit } from "@/features/edit/editSlice";
+import { toast } from "react-toastify";
 
 const BlogCard = ({ blog }) => {
   const { data: author } = useGetUserQuery(blog?.author);
   const [modelOpen, setModelOpen] = useState(false);
-  console.log(modelOpen);
-  const publishedAgo = publishDate(blog?.createdAt)
+  const publishedAgo = publishDate(blog?.createdAt);
+  const [deleteBlog] = useDeleteBlogMutation();
+  const dispatch = useDispatch();
 
-  console.log(author);
-  
+  console.log(author, blog.isDeleted);
+
+  const handleDelete = async (blog) => {
+    try {
+      await deleteBlog(blog._id);
+      toast.success(`"${blog?.title}" is deleted`);
+    } catch (err) {
+      toast.error(err?.message || "Couldn't delete");
+    }
+  };
 
   return (
     <div onClick={() => setModelOpen(false)}>
@@ -66,12 +81,19 @@ const BlogCard = ({ blog }) => {
             setModelOpen(!modelOpen);
           }}
         />
+        {/* Delete and Edit features */}
         {modelOpen && (
           <div className="flex flex-col border absolute top-5 right-5 rounded-md bg-slate-100">
-            <button className="btn bg-slate-100 text-black hover:bg-slate-300">
+            <button
+              onClick={() => dispatch(openEdit(blog._id))}
+              className="btn bg-slate-100 text-black hover:bg-slate-300"
+            >
               Edit
             </button>
-            <button className="btn bg-slate-100 text-black hover:bg-slate-300">
+            <button
+              onClick={() => handleDelete(blog)}
+              className="btn bg-slate-100 text-black hover:bg-slate-300"
+            >
               Delete
             </button>
           </div>

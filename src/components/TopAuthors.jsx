@@ -14,10 +14,9 @@ const TopAuthors = () => {
     isSuccess,
   } = useGetUsersQuery();
 
-  const authors = allUsers?.data
+  const authors = allUsers?.data;
 
   console.log(authors);
-  
 
   // Conditionally Rendered
   let content;
@@ -53,8 +52,9 @@ const TopAuthors = () => {
         </h2>
         <div className="px-4 py-2 w-full max-h-96 mt-5 rounded-md bg-slate-100 overflow-auto flex md:flex-col gap-4 items-center md:items-start justify-start">
           {authors?.map((author) => (
-            <Link href={`/user/${author?.author?._id}`}
-              key={author.id}
+            <Link
+              key={author?.author?._id}
+              href={`/user/${author?.author?._id}`}
               className="flex mb-2 md:flex-row gap-2 flex-col justify-center w-max items-center"
             >
               <Image

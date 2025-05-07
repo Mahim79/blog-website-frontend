@@ -1,10 +1,13 @@
 "use client";
-import { useCreateBlogMutation, useGetBlogCategoriesQuery } from "@/features/api/apiSlice";
+import {
+  useCreateBlogMutation,
+  useGetBlogCategoriesQuery,
+} from "@/features/api/apiSlice";
 import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 
-const CreateBlog = ({author}) => {
+const CreateBlog = ({ author }) => {
   const [createBlog, { data }] = useCreateBlogMutation();
   const imageRef = useRef();
   const [newBlog, setNewBlog] = useState({
@@ -14,10 +17,10 @@ const CreateBlog = ({author}) => {
     image: "",
   });
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter()
-  const {data:AllCategories} = useGetBlogCategoriesQuery()
+  const router = useRouter();
+  const { data: AllCategories } = useGetBlogCategoriesQuery();
 
-  const categories = AllCategories?.data
+  const categories = AllCategories?.data;
 
   const handleChange = (e) => {
     setNewBlog({
@@ -51,7 +54,7 @@ const CreateBlog = ({author}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     setIsLoading(true);
     const imageURL = await imageUpload();
     if (!imageURL)
@@ -67,9 +70,9 @@ const CreateBlog = ({author}) => {
         image: "",
       });
       imageRef.current.value = "";
-      setTimeout(()=>{
-        router.push("/blogs")
-      },2000)
+      setTimeout(() => {
+        router.push("/blogs");
+      }, 2000);
     } catch (err) {
       toast(err?.message || "Blog couldn't create");
     }
@@ -106,9 +109,12 @@ const CreateBlog = ({author}) => {
           onChange={(e) => setNewBlog({ ...newBlog, category: e.target.value })}
           required
         >
-          <option value="" disabled>Category</option>
-          {categories?.map(category => <option value={category}>{category}</option>)}
-          
+          <option value="" disabled>
+            Category
+          </option>
+          {categories?.map((category) => (
+            <option value={category}>{category}</option>
+          ))}
         </select>
         <input
           name="image"

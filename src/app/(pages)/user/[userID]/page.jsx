@@ -1,6 +1,7 @@
 "use client";
 import BlogCard from "@/components/BlogCard";
 import CreateBlog from "@/components/CreateBlog";
+import EditForm from "@/components/EditForm";
 import { useGetBlogsQuery, useGetUserQuery } from "@/features/api/apiSlice";
 import Image from "next/image";
 import { useParams } from "next/navigation";
@@ -10,12 +11,15 @@ import {
   AiFillInstagram,
   AiFillLinkedin,
 } from "react-icons/ai";
+import { useSelector } from "react-redux";
+import { ToastContainer } from "react-toastify";
 
 const UserID = () => {
   const { userID } = useParams();
   const { data: user, isLoading, isError, isSuccess } = useGetUserQuery(userID);
   const { data: blogs } = useGetBlogsQuery({ userID });
   const [createBlog, setCreateBlog] = useState(false);
+  const isOpen = useSelector((state) => state.edit.isOpen);
 
   return isLoading ? (
     <h2 className="min-w-full min-h-[70vh] flex items-center justify-center">
@@ -63,17 +67,21 @@ const UserID = () => {
         </div>
       )}
       {/* all blogs */}
-      {blogs && <div>
-        <h2 className="font-bold m-5 md:mt-10 text-xl underline underline-offset-4 text-center decoration-teal">
-          {user?.lastName}'s Blogs
-        </h2>
-      </div>}
+      {blogs && (
+        <div>
+          <h2 className="font-bold m-5 md:mt-10 text-xl underline underline-offset-4 text-center decoration-teal">
+            {user?.lastName}'s Blogs
+          </h2>
+        </div>
+      )}
 
       <div className="grid md:grid-cols-2 xl:grid-cols-3 w-full mx-auto">
         {blogs?.data?.map((blog) => (
           <BlogCard blog={blog} />
         ))}
       </div>
+      {isOpen && <EditForm />}
+      <ToastContainer autoClose={2000} />
     </div>
   );
 };

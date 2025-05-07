@@ -7,6 +7,8 @@ import Stats from "@/components/Stats";
 export default function Home() {
   return (
     <div>
+             
+
       <div className="relative bg-black">
       <Image
       alt="hero image"

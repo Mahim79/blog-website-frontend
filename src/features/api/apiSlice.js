@@ -4,6 +4,7 @@ const apiSlice = createApi({
 
     reducerPath:"api",
     baseQuery:fetchBaseQuery({baseUrl:"https://ic-blog-api.vercel.app"}),
+    tagTypes:["blog"],
     endpoints:(builder)=>({
         // Get all users
         getUsers : builder.query({
@@ -24,7 +25,8 @@ const apiSlice = createApi({
                     return `/api/blog/author/${data.userID}`
                 }
                 return "/api/blog/all-blog"
-            }
+            },
+            providesTags:["blog"]
         }),
         // Get single blog
         getBlog: builder.query({
@@ -34,16 +36,38 @@ const apiSlice = createApi({
         getBlogCategories: builder.query({
             query:()=> `/api/blog/categories`
         }),
+        // Create a new blog
         createBlog: builder.mutation({
             query:(data)=> ({
                 url:`/api/blog/create-blog`,
                 method:"POST",
                 body:JSON.stringify(data)
-            })
+            }),
+            invalidatesTags:["blog"]
         }),
+        //Delete a blog
+        deleteBlog: builder.mutation({
+            query:(id)=> ({
+                url: `api/blog/${id}`,
+                method:"PUT",
+                body : JSON.stringify({...blog,isDeleted : true})
+            }),
+            invalidatesTags:["blog"]
+        }),
+        // Edit a blog 
+        editBlog: builder.mutation({
+            query:(data)=>({
+                 url:`api/blog/${blog._id}`,
+                 method:"PUT",
+                 body: JSON.stringify(data)
+            }),
+            invalidatesTags:["blog"]
+        }),
+        // Get Related blogs
         relatedBlogs: builder.query({
             query:(category)=> `/api/blog/category/${category}`
         }),
+        // Create new User
       registerUser: builder.mutation({
       query: (newUser) => ({
         url: '/users',
@@ -51,6 +75,7 @@ const apiSlice = createApi({
         body: newUser,
       }),
     }),
+    // Login user
       loginUser: builder.query({
       query: ({ email, password }) =>
         `users?email=${email}&password=${password}`,
@@ -62,7 +87,7 @@ const apiSlice = createApi({
 
 export default apiSlice
 export const {useGetUsersQuery,useGetUserQuery,useGetBlogsQuery, useGetBlogQuery, useGetBlogCategoriesQuery , useCreateBlogMutation, useRelatedBlogsQuery,useRegisterUserMutation,
-  useLoginUserQuery, } = apiSlice
+  useLoginUserQuery, useDeleteBlogMutation, useEditBlogMutation } = apiSlice
 
  
 

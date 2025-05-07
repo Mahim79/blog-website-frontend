@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import BlogCard from "./BlogCard";
-import { useGetBlogsQuery } from "@/features/api/apiSlice";
+import {  useGetBlogsQuery } from "@/features/api/apiSlice";
 import { useSearchParams } from "next/navigation";
 
 const AllBlogs = () => {
@@ -21,10 +21,9 @@ const AllBlogs = () => {
     }
   );
 
-  const blogs = allBlogs?.data
-  
+  const blogs = allBlogs?.data;
+
   console.log(blogs);
-  
 
   let content;
   if (isLoading) {
@@ -53,7 +52,9 @@ const AllBlogs = () => {
     );
   }
   if (blogs?.length > 0) {
-    content = blogs?.map((blog) => <BlogCard key={blog.id} blog={blog} />);
+    content = blogs
+      ?.filter((blog) => blog.isDeleted === false)
+      .map((blog) => <BlogCard key={blog._id} blog={blog} />);
   }
   return (
     <div>
@@ -61,6 +62,7 @@ const AllBlogs = () => {
         All Blogs
       </h2>
       <div className="grid md:grid-cols-2 xl:grid-cols-3">{content}</div>
+      
     </div>
   );
 };

@@ -10,7 +10,7 @@ const RelatedBlogs = ({ blog }) => {
   return (
     <div className="grid md:grid-cols-2 xl:grid-cols-3 w-full mx-auto">
       {blogs?.data?.map((blog) => (
-        <BlogCard key={blog?.id} blog={blog} />
+        <BlogCard key={blog?._id} blog={blog} />
       ))}
     </div>
   );
