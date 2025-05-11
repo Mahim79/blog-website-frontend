@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import { Montserrat } from "next/font/google";
 import { Providers } from "@/store/provider";
 import UserProvider from "@/features/provider/UserProvider";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,6 +40,7 @@ export default function RootLayout({ children }) {
           <UserProvider >
             <Navbar />
             {children}
+            <Footer/>
           </UserProvider>
         </Providers>
       </body>
