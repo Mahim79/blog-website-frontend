@@ -1,23 +1,12 @@
 "use client";
 
+import { useGetAllCategoriesQuery } from "@/features/api/apiSlice";
 import Link from "next/link";
 import React, { useState } from "react";
 
-const categories = [
-  "All",
-  "Travel",
-  "Lifestyle",
-  "Health",
-  "Tech",
-  "Adventure",
-  "Art",
-  "Wellness",
-  "Finance",
-  "Science",
-];
-
 const BlogsCategory = () => {
   const [activeCategory, setActiveCategory] = useState("All");
+  const { data: categories } = useGetAllCategoriesQuery();
 
   return (
     <div className="max-h-full">
@@ -26,7 +15,7 @@ const BlogsCategory = () => {
       </h2>
       <div className="px-5 pb-5 w-full md:h-screen rounded-md bg-slate-100 overflow-auto flex md:flex-col gap-4 items-center md:items-start justify-start">
         <ul className="flex items-start flex-wrap gap-2 ">
-          {categories.map((category) => (
+          {categories?.data?.map((category) => (
             <li
               key={category}
               onClick={() => setActiveCategory(category)}

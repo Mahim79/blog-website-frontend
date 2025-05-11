@@ -1,51 +1,96 @@
 "use client";
 import BlogCard from "@/components/BlogCard";
-import { useGetBlogsQuery, useGetUserQuery } from "@/features/api/apiSlice";
+import CreateBlog from "@/components/CreateBlog";
+import EditForm from "@/components/EditForm";
+import Loader from "@/components/Loader";
+import {
+  useGetBlogByAuthorQuery,
+  useGetUserQuery,
+} from "@/features/api/apiSlice";
+import { useUserDetails } from "@/features/hooks/useUser";
 import Image from "next/image";
+import Link from "next/link";
 import { useParams } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import {
   AiFillFacebook,
   AiFillInstagram,
   AiFillLinkedin,
-  AiFillaedin,
 } from "react-icons/ai";
+import { useSelector } from "react-redux";
+import { ToastContainer } from "react-toastify";
 
 const UserID = () => {
   const { userID } = useParams();
-  const { data: user } = useGetUserQuery(userID);
-  const {data:blogs} = useGetBlogsQuery({userID})
 
-  return (
+  const { data: user, isLoading, isError, isSuccess } = useGetUserQuery(userID);
+  const { data: blogs } = useGetBlogByAuthorQuery(userID);
+  const [createBlog, setCreateBlog] = useState(false);
+  const isOpen = useSelector((state) => state.edit.isOpen);
+  const { userDetails, setUserDetails } = useUserDetails();
+  console.log(userDetails);
+
+  return isLoading ? (
+    <Loader />
+  ) : isError ? (
+    <h2 className="min-w-full min-h-[70vh] flex items-center justify-center">
+      User Not Found
+    </h2>
+  ) : (
     <div>
       <div>
         <Image
-          src={user?.image}
+          src={user?.profilePicture}
+          alt="Profile"
           width={200}
           height={200}
           className={`w-24 h-24 rounded-full mx-auto mt-10`}
         />
-        <h2 className="text-center text-2xl font-bold my-2">{user?.name}</h2>
+        <h2 className="text-center text-2xl font-bold my-2">{`${user?.firstName} ${user?.lastName}`}</h2>
         <div className="flex items-center justify-center gap-3">
-          <a target="_blank" href={"https://www.facebook.com"}>
+          <Link target="_blank" href={"https://www.facebook.com"}>
             <AiFillFacebook className="text-3xl text-blue-600 cursor-pointer" />
-          </a>
-          <a target="_blank" href={"https://www.instagram.com"}>
+          </Link>
+          <Link target="_blank" href={"https://www.instagram.com"}>
             <AiFillInstagram className="text-3xl text-rose-800 cursor-pointer" />
-          </a>
-          <a target="_blank" href={"https://www.linkedin.com"}>
+          </Link>
+          <Link target="_blank" href={"https://www.linkedin.com"}>
             <AiFillLinkedin className="text-3xl text-sky-700 cursor-pointer" />
-          </a>
+          </Link>
         </div>
+        {userDetails?._id === userID && (
+          <button
+            className={`btn ${
+              createBlog ? "bg-red-600" : "bg-teal"
+            } block mx-auto my-5`}
+            onClick={() => setCreateBlog(!createBlog)}
+          >
+            {createBlog ? "Discard" : "Create Blog"}
+          </button>
+        )}
       </div>
-      <div>
-        <h2 className="font-bold m-5 md:mt-10 text-xl underline underline-offset-4 text-center decoration-teal">
-          {user?.name}'s Blogs
-        </h2>
-      </div>
+      {/* Create blog form  */}
+      {createBlog && (
+        <div>
+          <CreateBlog author={user?._id} />
+        </div>
+      )}
+      {/* all blogs */}
+      {blogs && (
+        <div>
+          <h2 className="font-bold m-5 md:mt-10 text-xl underline underline-offset-4 text-center decoration-teal">
+            {user?.username}'s Blogs
+          </h2>
+        </div>
+      )}
+
       <div className="grid md:grid-cols-2 xl:grid-cols-3 w-full mx-auto">
-        {blogs?.map(blog=> <BlogCard blog={blog}/>)}
+        {blogs?.data?.map((blog) => (
+          <BlogCard key={blog._id} blog={blog} />
+        ))}
       </div>
+      {isOpen && <EditForm />}
+      <ToastContainer autoClose={2000} />
     </div>
   );
 };

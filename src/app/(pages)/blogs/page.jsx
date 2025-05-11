@@ -1,10 +1,12 @@
 import AllBlogs from "@/components/AllBlogs";
 import BlogsCategory from "@/components/BlogsCategory";
 import LatestBlog from "@/components/LatestBlogs";
+import Loader from "@/components/Loader";
 import TopAuthors from "@/components/TopAuthors";
 import React, { Suspense } from "react";
 
 const Blogs = () => {
+  
   return (
     <div className="md:flex items-start justify-around">
       <div
@@ -25,7 +27,7 @@ const Blogs = () => {
           <LatestBlog />
         </div>
         <div className="w-3/4 h-1 bg-teal mx-auto my-5"></div>
-        <Suspense fallback={<h1 className="text-center">Loading.......</h1>}>
+        <Suspense fallback={<Loader />}>
           <AllBlogs />
         </Suspense>
       </div>

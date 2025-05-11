@@ -1,16 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useLoginUserMutation } from "@/features/api/apiSlice";
 import FormInput from "../../../components/FormInput";
 import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useUserDetails } from "@/features/hooks/useUser";
 
 export default function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "" });
 
   const router = useRouter();
+  const { setUserDetails } = useUserDetails();
 
   const [loginUser, { isLoading }] = useLoginUserMutation();
 
@@ -42,7 +44,12 @@ export default function LoginPage() {
 
       toast.success("Login successful! Redirecting...");
       localStorage.setItem("token", response.token);
-      router.push("/");
+
+      setUserDetails(response.user);
+
+      setTimeout(() => {
+        router.push("/");
+      }, 1000);
     } catch (err) {
       toast.error("Invalid email or password");
     }

@@ -1,22 +1,21 @@
 "use client";
 import React from "react";
-import { useGetBlogsQuery } from "@/features/api/apiSlice";
+import { useGetPopularBlogsQuery } from "@/features/api/apiSlice";
 import LatestBlogCard from "./LatestBlogCard";
 
 const LatestBlog = () => {
   // Blogs api call
   const {
-    data: blogs,
+    data: popularBlogs,
     isError,
     isLoading,
     error,
     isSuccess,
-  } = useGetBlogsQuery({limit:4}, {
-    refetchOnMountOrArgChange: true,
-  });
+  } = useGetPopularBlogsQuery();
+  // console.log(popularBlogs);
+  const blogs = popularBlogs?.data;
+  // console.log(blogs);
 
-  console.log(blogs);
-  
   // Conditionally Rendered
   let content;
   if (isLoading) {
@@ -39,14 +38,14 @@ const LatestBlog = () => {
     content = (
       <div className="my-5">
         <h2 className=" mx-5 mt-10 text-3xl text-center font-semibold">
-          There are no blog
+          There is no blogs
         </h2>
       </div>
     );
   }
   if (blogs?.length > 0) {
     content = blogs?.map((blog) => (
-      <LatestBlogCard key={blog.id} blog={blog} />
+      <LatestBlogCard key={blog.title} blog={blog.blog} />
     ));
   }
 
