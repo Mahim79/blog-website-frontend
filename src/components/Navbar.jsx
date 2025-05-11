@@ -152,6 +152,13 @@ const Navbar = () => {
                         : `/user/${userDetails._id}`
                     }
                   >
+                    <Image
+                      src={userDetails.profilePicture}
+                      width={32}
+                      height={32}
+                      alt={`${userDetails.username}'s profile picture`}
+                      className="inline-block rounded-full mr-2"
+                    />
                     {userDetails.username}
                   </Link>
                 ) : (

@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
-import { useGetUsersQuery } from "@/features/api/apiSlice";
+import { useGetTopUsersQuery } from "@/features/api/apiSlice";
 
 // User's Api call
 const TopAuthors = () => {
@@ -12,12 +12,12 @@ const TopAuthors = () => {
     isLoading,
     error,
     isSuccess,
-  } = useGetUsersQuery();
+  } = useGetTopUsersQuery();
+  console.log(allUsers);
 
-  const authors = allUsers?.data
+  const authors = allUsers?.data;
 
   console.log(authors);
-  
 
   // Conditionally Rendered
   let content;
@@ -52,9 +52,10 @@ const TopAuthors = () => {
           Top Authors
         </h2>
         <div className="px-4 py-2 w-full max-h-96 mt-5 rounded-md bg-slate-100 overflow-auto flex md:flex-col gap-4 items-center md:items-start justify-start">
-          {authors?.map((author) => (
-            <Link href={`/user/${author?.author?._id}`}
-              key={author.id}
+          {authors?.map((author,i) => (
+            <Link
+              key={i}
+              href={`/user/${author?.author?._id}`}
               className="flex mb-2 md:flex-row gap-2 flex-col justify-center w-max items-center"
             >
               <Image
@@ -64,12 +65,9 @@ const TopAuthors = () => {
                 height={100}
                 className="w-5 h-5 rounded-full bg-black overflow-hidden"
               />
-              <Link
-                href={`/user/${author?.author?._id}`}
-                className="text-sm text-nowrap font-semibold hover:underline"
-              >
+              <span className="text-sm text-nowrap font-semibold hover:underline">
                 {author?.author?.username}
-              </Link>
+              </span>
             </Link>
           ))}
         </div>

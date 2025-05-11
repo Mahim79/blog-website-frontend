@@ -17,23 +17,24 @@ const BlogDetails = () => {
   const { id } = useParams();
   const { data: singleBlog } = useGetBlogQuery(id);
   const { data: author } = useGetUserQuery(singleBlog?.data?.author);
-  const blog = singleBlog?.data
-  const publishedAgo = publishDate(blog?.createdAt)
-  console.log(author,blog);
-  
+  const blog = singleBlog?.data;
+  const publishedAgo = publishDate(blog?.createdAt);
+  console.log(author, blog);
+
   return (
     <div>
       <div className="mx-auto w-[320px]  sm:w-4/5 p-5">
-        <h2 className="text-3xl font-bold mb-5">{blog?.title}</h2>
+        <h2 className="text-xl md:text-3xl font-bold mb-5">{blog?.title}</h2>
+
         <Image
           src={blog?.image}
           width={400}
           height={400}
           alt={"Cover"}
-          className="w-full h-44 sm:h-72 md:h-screen rounded-md "
+          className="w-full h-[40vh] lg:h-[60vh] rounded-md object-cover "
         />
 
-        <div className="flex items-start justify-between flex-col sm:flex-row sm:items-center">
+        <div className="flex flex-col items-center justify-between gap-2  sm:flex-row sm:items-center">
           {/* Like, comment button */}
           <div className="flex items-end gap-6">
             <div className="flex items-center ">
@@ -82,6 +83,9 @@ const BlogDetails = () => {
             <IoIosTimer className="text-teal" />
             <p>{publishedAgo}</p>
           </div>
+          <button  className="  border text-center border-black  bg-teal badge text-white p-1 ">
+            Edit
+          </button>
         </div>
 
         {/* comment box */}
@@ -89,6 +93,7 @@ const BlogDetails = () => {
 
         <div className="">{blog?.content}</div>
       </div>
+
       <h2 className="font-bold m-5 md:mt-10 text-xl underline underline-offset-4 text-center decoration-teal">
         Related Blogs
       </h2>

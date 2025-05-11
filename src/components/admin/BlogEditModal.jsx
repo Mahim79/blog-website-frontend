@@ -1,59 +1,86 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Loader from "./../Loader";
-import { useUpdateBlogMutation } from "@/features/api/apiSlice";
+import { useEditBlogMutation } from "@/features/api/apiSlice";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import uploadImage from "@/features/utils/uploadImage";
 import { categoryList } from "./../../features/utils/categoryList";
+import { useUserDetails } from "./../../features/hooks/useUser";
+import { useRouter } from "next/navigation";
 
 // Separate image upload logic
 
 export default function BlogEditModal({ blog, onClose, onUpdate }) {
-  const [title, setTitle] = useState(blog.title || "");
+  const [formData, setFormData] = useState({
+    title: "",
+    category: "",
+    content: "",
+    tags: "",
+    image: "",
+  });
 
-  const [content, setContent] = useState(blog.content || "");
-  const [image, setImage] = useState(null);
-  const [tags, setTags] = useState(blog.tags || []);
-  const [isDeleted, setIsDeleted] = useState(blog.isDeleted || false);
-  const [loading, setLoading] = useState(false);
-  const [updateBlog, { isLoading: isUpdating }] = useUpdateBlogMutation();
-  const [category, setCategory] = useState(blog.category || "");
+  const { userDetails } = useUserDetails();
+  const router = useRouter();
+  const [updateBlog, { isLoading: isUpdating }] = useEditBlogMutation();
+
+  useEffect(() => {
+    if (blog) {
+      setFormData({
+        title: blog.title || "",
+        category: blog.category || "",
+        content: blog.content || "",
+        tags: blog.tags?.join(", ") || "",
+        image: blog.image || "",
+      });
+    }
+  }, [blog]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-
-    let imageUrl = blog.image;
 
     try {
-      if (image) {
-        imageUrl = await uploadImage(image);
-        toast.success("Image uploaded successfully");
+      let imageUrl = formData.image;
+      if (formData.image instanceof File) {
+        imageUrl = await uploadImage(formData.image);
       }
 
-      const updated = await updateBlog({
-        id: blog._id,
-        title,
-        category,
-        content,
+      const updatedBlog = {
+        ...blog,
+        title: formData.title,
+        category: formData.category,
+        content: formData.content,
+        tags: formData.tags.split(",").map((tag) => tag.trim()),
         image: imageUrl,
-        tags,
-        isDeleted,
-      }).unwrap();
+      };
+      console.log(updatedBlog);
 
-      toast.success("Blog updated successfully!");
-      onClose?.();
-      onUpdate?.(updated);
+      const response = await updateBlog({
+        id: blog._id,
+        data: updatedBlog,
+      }).unwrap();
+      console.log(response);
+      if (!response) {
+       toast.error("Update Fail")
+      }
+       toast.success("Blog updated!");
+        onUpdate(response.blog);
+      onClose();
     } catch (err) {
-      console.error(err);
-      toast.error(err.message || "Something went wrong.");
-    } finally {
-      setLoading(false);
+      console.log(err);
+      toast.error(err.message || "An unexpected error occurred.");
     }
   };
 
-  if (loading || isUpdating) return <Loader />;
+  if (isUpdating) return <Loader />;
 
   return (
     <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex justify-center items-center">
@@ -63,16 +90,18 @@ export default function BlogEditModal({ blog, onClose, onUpdate }) {
         <form onSubmit={handleSubmit}>
           <input
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
             placeholder="Title"
             className="border border-gray-300 p-2 rounded mb-4 w-full"
             required
           />
 
           <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            value={formData.category}
+            name="category"
+            onChange={handleChange}
             className="border border-gray-300 p-2 rounded mb-4 w-full"
             required
           >
@@ -87,35 +116,33 @@ export default function BlogEditModal({ blog, onClose, onUpdate }) {
           </select>
 
           <textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
+            name="content"
+            value={formData.content}
+            onChange={handleChange}
             placeholder="Content"
             className="border border-gray-300 p-2 rounded mb-4 w-full h-32"
             required
           />
           <input
             type="file"
-            onChange={(e) => setImage(e.target.files[0])}
+            name="image"
+            onChange={(e) =>
+              setFormData((prev) => ({
+                ...prev,
+                image: e.target.files[0],
+              }))
+            }
             className="border border-gray-300 p-2 rounded mb-4 w-full"
           />
           <input
             type="text"
-            value={tags.join(", ")}
-            onChange={(e) =>
-              setTags(e.target.value.split(",").map((t) => t.trim()))
-            }
+            value={formData.tags}
+            onChange={handleChange}
+            name="tags"
             placeholder="Tags (comma separated)"
             className="border border-gray-300 p-2 rounded mb-4 w-full"
           />
-          <label className="flex items-center mb-4">
-            <input
-              type="checkbox"
-              checked={isDeleted}
-              onChange={(e) => setIsDeleted(e.target.checked)}
-              className="mr-2"
-            />
-            Soft Delete
-          </label>
+
           <div className="flex justify-between">
             <button
               type="button"
@@ -126,10 +153,10 @@ export default function BlogEditModal({ blog, onClose, onUpdate }) {
             </button>
             <button
               type="submit"
-              disabled={loading || isUpdating}
+              disabled={isUpdating}
               className="bg-teal text-white px-4 py-2 rounded"
             >
-              {loading || isUpdating ? "Updating..." : "Update Blog"}
+              {isUpdating ? "Updating..." : "Update Blog"}
             </button>
           </div>
         </form>

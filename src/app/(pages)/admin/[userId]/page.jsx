@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 export default function page() {
@@ -9,16 +10,16 @@ export default function page() {
 
       <ul className="flex flex-col w-3/4 mx-auto mt-4 text-center  bg-white shadow-lg rounded-lg">
         <li className="p-4 border-b border-gray-300 hover:border-black hover:border">
-          <a href="/admin/users">Manage Users</a>
+          <Link href="/admin/users">Manage Users</Link>
         </li>
         <li className="p-4 border-b border-gray-300 hover:border-black hover:border">
-          <a href="/admin/blogs"> Manage Blogs</a>
+          <Link href="/admin/blogs"> Manage Blogs</Link>
         </li>
         {/* <li className="p-4 border-b border-gray-300 hover:border-black hover:border">
           <a href="/admin/comments">Comments</a>
         </li> */}
         <li className="p-4 border-b border-gray-300 hover:border-black hover:border">
-          <a href="/admin/settings">Settings</a>
+          <Link href="/admin/settings">Settings</Link>
         </li>
       </ul>
     </div>

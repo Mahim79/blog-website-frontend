@@ -1,10 +1,15 @@
 "use client";
-import { useCreateBlogMutation, useGetBlogCategoriesQuery } from "@/features/api/apiSlice";
+import {
+  useCreateBlogMutation,
+  useGetBlogCategoriesQuery,
+} from "@/features/api/apiSlice";
 import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
+import { categoryList as categories } from "@/features/utils/categoryList";
+import { useUserDetails } from './../features/hooks/useUser';
 
-const CreateBlog = ({author}) => {
+const CreateBlog = ({ author }) => {
   const [createBlog, { data }] = useCreateBlogMutation();
   const imageRef = useRef();
   const [newBlog, setNewBlog] = useState({
@@ -12,12 +17,14 @@ const CreateBlog = ({author}) => {
     content: "",
     category: "",
     image: "",
+    tags: [],
   });
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter()
-  const {data:AllCategories} = useGetBlogCategoriesQuery()
+  
+  const router = useRouter();
+  // const { data: AllCategories } = useGetBlogCategoriesQuery();
 
-  const categories = AllCategories?.data
+  // const categories = AllCategories?.data;
 
   const handleChange = (e) => {
     setNewBlog({
@@ -51,11 +58,14 @@ const CreateBlog = ({author}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     setIsLoading(true);
     const imageURL = await imageUpload();
-    if (!imageURL)
-      return console.log("Image upload failed, aborting blog creation.");
+    if (!imageURL) {
+      toast("Image upload failed.");
+      setIsLoading(false);
+      return;
+    }
 
     try {
       await createBlog({ ...newBlog, author, image: imageURL });
@@ -65,13 +75,17 @@ const CreateBlog = ({author}) => {
         content: "",
         category: "",
         image: "",
+        tags: [],
       });
       imageRef.current.value = "";
-      setTimeout(()=>{
-        router.push("/blogs")
-      },2000)
+      setTimeout(() => {
+        router.push("/blogs");
+      }, 2000);
+
+      setIsLoading(false);
     } catch (err) {
       toast(err?.message || "Blog couldn't create");
+      setIsLoading(false);
     }
 
     setIsLoading(false);
@@ -106,9 +120,14 @@ const CreateBlog = ({author}) => {
           onChange={(e) => setNewBlog({ ...newBlog, category: e.target.value })}
           required
         >
-          <option value="" disabled>Category</option>
-          {categories?.map(category => <option value={category}>{category}</option>)}
-          
+          <option value="" disabled>
+            Category
+          </option>
+          {categories?.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
         </select>
         <input
           name="image"
@@ -116,6 +135,20 @@ const CreateBlog = ({author}) => {
           className="block p-2 w-full rounded-md focus:outline-teal  my-2"
           ref={imageRef}
           onChange={(e) => setNewBlog({ ...newBlog, image: e.target.files[0] })}
+          required
+        />
+        <input
+          type="text"
+          name="tags"
+          placeholder="Tags (comma separated)"
+          className="block p-2 w-full rounded-md focus:outline-teal  my-2"
+          value={newBlog.tags.join(", ")}
+          onChange={(e) =>
+            setNewBlog({
+              ...newBlog,
+              tags: e.target.value.split(",").map((tag) => tag.trim()),
+            })
+          }
           required
         />
         <button

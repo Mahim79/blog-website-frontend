@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useRegisterUserMutation } from '@/features/api/apiSlice';
-import FormInput from '../../../components/FormInput';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useRegisterUserMutation } from "@/features/api/apiSlice";
+import FormInput from "../../../components/FormInput";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function RegisterPage() {
   const [form, setForm] = useState({
-    firstName: '',
-    lastName: '',
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    firstName: "",
+    lastName: "",
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const router = useRouter();
@@ -39,22 +39,22 @@ export default function RegisterPage() {
       !password ||
       !confirmPassword
     ) {
-      toast.error('All fields are required');
+      toast.error("All fields are required");
       return;
     }
 
     if (!isEmailValid(email)) {
-      toast.error('Invalid email format');
+      toast.error("Invalid email format");
       return;
     }
 
     if (password.length < 6) {
-      toast.error('Password must be at least 6 characters');
+      toast.error("Password must be at least 6 characters");
       return;
     }
 
     if (password !== confirmPassword) {
-      toast.error('Passwords do not match');
+      toast.error("Passwords do not match");
       return;
     }
 
@@ -66,14 +66,22 @@ export default function RegisterPage() {
         email,
         password,
       }).unwrap();
+      // console.log(response);
 
-      localStorage.setItem('token', response.token);
-      toast.success(
-        'Registration successful! Please check your email to verify your account.'
-      );
-      router.push('/');
+      if (response.success) {
+        toast.success(
+          "Registration successful! Please check your email to verify your account."
+        );
+        router.push(`/verify-email/${response?.user?._id}`);
+        return;
+      }
+      if (!response.success) {
+        toast.error(response.message);
+        return;
+      }
     } catch (error) {
-      toast.error('Registration failed. Try again.');
+      console.error("Register error:", error);
+      toast.error(error?.data?.message || "Registration failed. Try again.");
     }
   };
 
@@ -135,7 +143,7 @@ export default function RegisterPage() {
           disabled={isLoading}
           className="w-full mt-4 btn hover:bg-deepTeal text-white font-semibold py-2 px-4 rounded-md transition"
         >
-          {isLoading ? 'Signing Up...' : 'Sign Up'}
+          {isLoading ? "Signing Up..." : "Sign Up"}
         </button>
       </form>
 

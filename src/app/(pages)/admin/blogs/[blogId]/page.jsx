@@ -9,15 +9,14 @@ import BlogEditModal from "@/components/admin/BlogEditModal";
 import FormattedDate from "@/components/FormattedDate";
 import Loader from "@/components/Loader";
 import { useGetBlogAdminQuery } from "@/features/api/apiSlice";
+import Image from "next/image";
 
 export default function Page() {
   const { blogId } = useParams();
   const [isEditing, setIsEditing] = useState(false);
   const { data, error, isLoading } = useGetBlogAdminQuery(blogId);
-  const blog = data?.data || null;
-  const onUpdate = (updated) => {
-    window.location.reload();
-  };
+  const blog = data?.data;
+  const [blogData, setBlogData] = useState(null);
 
   if (isLoading) return <Loader />;
   if (error)
@@ -28,6 +27,12 @@ export default function Page() {
     );
   if (!blog) return <div className="text-center mt-10">No data found</div>;
 
+  useEffect(() => {
+    if (blog) {
+      setBlogData(blog);
+    }
+  }, [blog]);
+
   const {
     title,
     category,
@@ -37,7 +42,12 @@ export default function Page() {
     author,
     tags,
     isDeleted,
-  } = blog;
+  } = blogData || {};
+
+  const onUpdate = (updatedBlog) => {
+    setBlogData(updatedBlog);
+  };
+
   console.log(title);
 
   return (
@@ -56,7 +66,7 @@ export default function Page() {
 
         {isEditing && (
           <BlogEditModal
-            blog={blog}
+            blog={blogData}
             onUpdate={onUpdate}
             onClose={() => setIsEditing(false)}
           />
@@ -74,9 +84,11 @@ export default function Page() {
         <div className="absolute top-16 mt-4 mb-4">
           <AuthorDetails author_id={author} />
         </div>
-        <img
-          src={image}
-          alt={title}
+        <Image
+          src={image || "/default-profile.png"}
+          alt={title || "blog image"}
+          width={800}
+          height={400}
           className="w-full h-72 object-cover rounded"
         />
         <div className="text-sm font-semibold p-4">{tags?.join(", ")}</div>

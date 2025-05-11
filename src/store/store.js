@@ -1,11 +1,15 @@
-const { default: apiSlice } = require("@/features/api/apiSlice");
-const { configureStore } = require("@reduxjs/toolkit");
+
+import { configureStore } from "@reduxjs/toolkit";
+import { apiSlice } from "@/features/api/apiSlice";
+import editReducer from "../features/edit/editSlice";
 
 const store = configureStore({
-    reducer : {
-        [apiSlice.reducerPath] : apiSlice.reducer,
+    reducer: {
+        [apiSlice.reducerPath]: apiSlice.reducer,
+        edit: editReducer,
     },
-    middleware:(getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware)
-})
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(apiSlice.middleware),
+});
 
-export default store
+export default store;

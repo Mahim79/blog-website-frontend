@@ -1,18 +1,25 @@
 "use client";
-import React from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Loader from "@/components/Loader";
 import BlogItem from "@/components/admin/BlogItem";
+import BlogCard from "@/components/BlogCard";
 const { useGetBlogsAdminQuery } = require("@/features/api/apiSlice");
 
 export default function BlogPage() {
-  const [page, setPage] = React.useState(1);
-  const [limit] = React.useState(10);
+  // const [page, setPage] = useState(1);
+  // const [limit] = useState(5);
 
-  const { data, error, isLoading } = useGetBlogsAdminQuery({ page, limit });
+  const { data, error, isLoading } = useGetBlogsAdminQuery();
+  // console.log(data);
+  const blogs =data?.data
+  // const [blogs, setBlogs] = useState(null);
+  // useEffect(() => {
+  //   setBlogs(data?.data);
+  // }, [data]);
 
   if (isLoading) return <Loader />;
-
+  // console.log(blogs);
   if (error)
     return (
       <div className="text-red-600 text-center mt-4">
@@ -30,12 +37,10 @@ export default function BlogPage() {
 
       <div className="flex flex-col w-3/4 mx-auto mt-4 text-center bg-white shadow-lg rounded-lg">
         <ul className="flex flex-col gap-2">
-          {data?.data?.map((blog) => (
-            <BlogItem key={blog._id} blog={blog} />
-          ))}
+          { <BlogItem blogs={blogs}/>}
         </ul>
 
-        <div className="flex justify-between mt-4 px-4">
+        {/* <div className="flex justify-between mt-4 px-4">
           <button
             className="bg-teal text-white px-4 py-2 rounded disabled:opacity-50"
             onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
@@ -53,7 +58,7 @@ export default function BlogPage() {
           >
             Next
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
