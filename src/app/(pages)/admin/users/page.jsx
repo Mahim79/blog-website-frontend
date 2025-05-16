@@ -1,8 +1,12 @@
+import AllUserDetails from "@/components/admin/AllUserDetails";
 import React from "react";
 
 export default function page() {
-
-    
-
-  return <div>user manage</div>;
+  return (
+    <div>
+      <h2>Manage User</h2>
+      <AllUserDetails/>
+  
+    </div>
+  );
 }

@@ -69,16 +69,16 @@ const BlogCard = ({ blog }) => {
         <BlogEditModal blog={localBlog} onClose={onClose} onUpdate={onUpdate} />
       )}
 
-      <div className="flex items-center  relative justify-center gap-1 m-2 ">
+      <div className="flex items-center  md:relative justify-center gap-1 m-2 ">
         {/* cover image  */}
         <Link href={`/blogs/${localBlog?._id}`} className="flex-1">
-          <div className="object-fit-cover w-72 h-36 rounded-md overflow-hidden">
+          <div className="object-fit-cover w-48 md:w-72 h-36 rounded-md overflow-hidden">
             <Image
               src={localBlog?.image}
               alt="cover"
               width={200}
               height={200}
-              className="w-72 h-36 rounded-md object-cover"
+              className="w-48 md:w-72 h-36 rounded-md object-cover"
             />
           </div>
         </Link>
@@ -130,7 +130,7 @@ const BlogCard = ({ blog }) => {
             onCancel={() => setYes(false)}
           />
         )}
-        {(userDetails?._id === localBlog?.author ||
+        {((userDetails?._id === localBlog?.author && author?.status==="approve" ) ||
           userDetails?.role === "admin") && (
           <FaEllipsisV
             className="text-teal place-self-start cursor-pointer"

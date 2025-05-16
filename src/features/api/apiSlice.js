@@ -19,7 +19,51 @@ export const apiSlice = createApi({
         getUser: builder.query({
             query: (id) => `/user/details/${id}`
         }),
-
+        //Get all user for admin
+        getAllUsersAdmin: builder.query({
+            query: () => ({
+                url: `/user/all-user`,
+                headers: {
+                    ...getToken()
+                }
+            }
+            )
+        }),
+        //Update User Data
+        updateUser: builder.mutation({
+            query: ({ data, id }) => ({
+                url: `/user/update/${id}`,
+                method: "PUT",
+                body: data,
+                headers: {
+                    ...getToken()
+                }
+            })
+        }),
+        //Suspend user
+        suspendUser: builder.mutation({
+            query: ({ id }) => ({
+                url: `/user/suspend/${id}`,
+                method: "PUT",
+                body: {
+                    "isSuspended": "suspend"
+                },
+                headers: {
+                    ...getToken()
+                }
+            })
+        }),
+        //Delete User
+         deleteUser: builder.mutation({
+            query: ({ id }) => ({
+                url: `/user/delete/${id}`,
+                method: "DELETE",
+               
+                headers: {
+                    ...getToken()
+                }
+            })
+        }),
         // ----------------- BLOGS -----------------
 
         // Get paginated or all blogs
@@ -177,7 +221,7 @@ export const apiSlice = createApi({
         }),
 
     })
-});
+})
 
 
 export const {
@@ -199,7 +243,10 @@ export const {
     useGetPopularBlogsQuery,
     useVerifyEmailMutation,
     useGetBlogByAuthorQuery,
-    useDeleteBlogAdminMutation
-
+    useDeleteBlogAdminMutation,
+    useGetAllUsersAdminQuery,
+    useUpdateUserMutation,
+    useSuspendUserMutation,
+    useDeleteUserMutation
 
 } = apiSlice;
