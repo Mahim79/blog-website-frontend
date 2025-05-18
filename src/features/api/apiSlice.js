@@ -54,11 +54,11 @@ export const apiSlice = createApi({
             })
         }),
         //Delete User
-         deleteUser: builder.mutation({
+        deleteUser: builder.mutation({
             query: ({ id }) => ({
                 url: `/user/delete/${id}`,
                 method: "DELETE",
-               
+
                 headers: {
                     ...getToken()
                 }
@@ -220,6 +220,53 @@ export const apiSlice = createApi({
             })
         }),
 
+        // ----------------- Comment and Like -----------------
+
+        //post comment 
+        postComment: builder.mutation({
+            query: ({ blogId, comment }) => ({
+
+                url: `/comment/post-comment/${blogId}`,
+                method: "POST",
+                body: { content:comment },
+                headers: {
+                    ...getToken()
+                }
+            })
+        }),
+        //get comments
+        getComments: builder.query({
+            query: ({ blogId }) => `/comment/get-comments/${blogId}`
+        }),
+        //add and remove like
+        addAndRemoveLike: builder.mutation({
+            query: ({ blogId }) => ({
+
+                url: `/like/${blogId}`,
+                method: "POST",
+                headers: {
+                    ...getToken()
+                }
+            })
+        }),
+        // get like count by blog id
+        getLikeCounts: builder.query({
+            query: ({ blogId }) => `/like/${blogId}`
+        }),
+        // soft delete comment
+        softDeleteComment: builder.mutation({
+            query: ( commentId ) => ({
+
+                url: `/comment/soft-delete-comment/${commentId}`,
+                method: "PUT",
+                headers: {
+                    ...getToken()
+                }
+            })
+        }),
+
+
+
     })
 })
 
@@ -247,6 +294,13 @@ export const {
     useGetAllUsersAdminQuery,
     useUpdateUserMutation,
     useSuspendUserMutation,
-    useDeleteUserMutation
+    useDeleteUserMutation,
+    useAddAndRemoveLikeMutation,
+    useGetLikeCountsQuery,
+    usePostCommentMutation,
+    useGetCommentsQuery,
+    useSoftDeleteCommentMutation
+
+
 
 } = apiSlice;

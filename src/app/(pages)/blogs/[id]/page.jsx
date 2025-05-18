@@ -10,10 +10,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
-import { AiFillLike, AiOutlineLike } from "react-icons/ai";
+
 import { FaEllipsisV, FaRegCommentAlt } from "react-icons/fa";
 import { IoIosTimer } from "react-icons/io";
 import { useEffect, useRef } from "react";
+import LikeCommentButton from "@/components/LikeCommentButton";
 
 const BlogDetails = () => {
   const [like, setLike] = useState(false);
@@ -27,9 +28,10 @@ const BlogDetails = () => {
   const blog = singleBlog?.data;
   const publishedAgo = publishDate(blog?.createdAt);
   const { userDetails } = useUserDetails();
+  const commentInputRef = useRef();
   // console.log(author, blog);
   const dropdownRef = useRef();
-
+  // close dropdown if user click out side
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -62,7 +64,7 @@ const BlogDetails = () => {
     try {
       // console.log(newBlogDetails);
 
-      // await refetch();
+      await refetch();
       setEditModal(false);
     } catch (error) {
       console.error("Update failed", error);
@@ -79,48 +81,54 @@ const BlogDetails = () => {
       toast.error(err?.message || "Couldn't delete");
     }
   };
+  const handleCommentClick = () => {
+    setCommentBox(true);
+    setTimeout(() => {
+      commentInputRef.current?.focus();
+    }, 0);
+  };
 
   return (
     <div>
       <div className="mx-auto w-[320px]  sm:w-4/5 p-5">
         <div className="flex justify-between">
           <h2 className="text-xl md:text-3xl font-bold mb-5">{blog?.title}</h2>
-          {userDetails?._id === blog?.author ||
-            (userDetails?.role === "admin" && (
-              <div className="relative" ref={dropdownRef}>
-                <FaEllipsisV
-                  className="text-teal place-self-start mt-2 cursor-pointer h-7 "
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setModelOpen(!modelOpen);
-                  }}
-                />
-                {modelOpen && (
-                  <div className="flex flex-col border absolute right-4  rounded-md bg-slate-100">
-                    <button
-                      onClick={() => handleEdit()}
-                      className="btn bg-slate-100 text-black hover:bg-slate-300"
-                    >
-                      Edit
-                    </button>
+          {(userDetails?._id === blog?.author ||
+            userDetails?.role === "admin") && (
+            <div className="relative" ref={dropdownRef}>
+              <FaEllipsisV
+                className="text-teal place-self-start mt-2 cursor-pointer h-7 "
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setModelOpen(!modelOpen);
+                }}
+              />
+              {modelOpen && (
+                <div className="flex flex-col border absolute right-4  rounded-md bg-slate-100">
+                  <button
+                    onClick={() => handleEdit()}
+                    className="btn bg-slate-100 text-black hover:bg-slate-300"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => setYes(true)}
+                    className="btn bg-slate-100 text-black hover:bg-slate-300"
+                  >
+                    {userDetails.role === "admin" ? "Hide" : "Delete"}
+                  </button>
+                  {userDetails.role === "admin" && (
                     <button
                       onClick={() => setYes(true)}
                       className="btn bg-slate-100 text-black hover:bg-slate-300"
                     >
-                      {userDetails.role === "admin" ? "Hide" : "Delete"}
+                      Delete
                     </button>
-                    {userDetails.role === "admin" && (
-                      <button
-                        onClick={() => setYes(true)}
-                        className="btn bg-slate-100 text-black hover:bg-slate-300"
-                      >
-                        Delete
-                      </button>
-                    )}
-                  </div>
-                )}
-              </div>
-            ))}
+                  )}
+                </div>
+              )}
+            </div>
+          )}
         </div>
         <span className=" bg-teal uppercase  rounded-full p-1  text-white">
           {blog?.category}
@@ -153,30 +161,10 @@ const BlogDetails = () => {
 
         <div className="flex flex-col items-center justify-between gap-2  sm:flex-row sm:items-center">
           {/* Like, comment button */}
-          <div className="flex items-end gap-6">
-            <div className="flex items-center ">
-              {like ? (
-                <AiFillLike
-                  onClick={() => setLike(!like)}
-                  className="text-3xl m-3 cursor-pointer text-teal"
-                />
-              ) : (
-                <AiOutlineLike
-                  onClick={() => setLike(!like)}
-                  className="text-3xl m-3 cursor-pointer"
-                />
-              )}
-              <span className="text-lg">15</span>
-            </div>
-
-            <div
-              className="flex items-center cursor-pointer"
-              onClick={() => setCommentBox(!commentBox)}
-            >
-              <FaRegCommentAlt className="text-2xl m-3 " />
-              <span className="text-lg hover:underline">5</span>
-            </div>
-          </div>
+          <LikeCommentButton
+            blogId={blog?._id}
+            onCommentButtonClick={handleCommentClick}
+          />
 
           {/* Author  */}
           <Link
@@ -201,9 +189,6 @@ const BlogDetails = () => {
             <p>{publishedAgo}</p>
           </div>
         </div>
-
-        {/* comment box */}
-        <div>{commentBox && <CommentBox />}</div>
 
         <div className="">{blog?.content}</div>
         <h5 className="flex gap-2 flex-wrap">
@@ -233,6 +218,10 @@ const BlogDetails = () => {
             );
           })}
         </h5>
+        {/* comment box */}
+        <div className="mt-2">
+          {<CommentBox ref={commentInputRef} blogId={blog?._id} />}
+        </div>
       </div>
 
       <h2 className="font-bold m-5 md:mt-10 text-xl underline underline-offset-4 text-center decoration-teal">
