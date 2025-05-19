@@ -11,7 +11,9 @@ const LatestBlog = () => {
     isLoading,
     error,
     isSuccess,
-  } = useGetPopularBlogsQuery();
+  } = useGetPopularBlogsQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
   // console.log(popularBlogs);
   const blogs = popularBlogs?.data;
   // console.log(blogs);
