@@ -3,27 +3,36 @@ import {
   useGetCommentsQuery,
   useSoftDeleteCommentMutation,
 } from "@/features/api/apiSlice";
-import { useState, forwardRef } from "react";
+import { useState, forwardRef, use } from "react";
 import { IoSend } from "react-icons/io5";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { toast } from "react-toastify";
 import CommentCard from "./CommentCard";
 import Loader from "./Loader";
+import { useUserDetails } from "./../features/hooks/useUser";
+import { useRouter } from "next/navigation";
 
 const CommentBox = forwardRef(({ blogId }, inputRef) => {
   const [comment, setComment] = useState("");
   const [postComment, { isLoading }] = usePostCommentMutation();
   const [softDeleteComment] = useSoftDeleteCommentMutation();
+  const router = useRouter();
   const {
     data,
     isLoading: loadingComments,
     refetch,
   } = useGetCommentsQuery({ blogId });
   const comments = data?.data;
-  console.log(comments);
+  const { userDetails } = useUserDetails();
+  // console.log(comments);
 
   const handleClick = async (e) => {
     e.preventDefault();
+    if (!userDetails?._id) {
+      toast.error("You need to be logged in to comment");
+      router.push("/login");
+      return;
+    }
 
     if (!comment.trim()) {
       toast.error("Comment cannot be empty");
@@ -41,7 +50,7 @@ const CommentBox = forwardRef(({ blogId }, inputRef) => {
     }
   };
 
-  console.log(comment);
+  // console.log(comment);
   return (
     <>
       <div className="w-full relative  overflow-auto h-12">

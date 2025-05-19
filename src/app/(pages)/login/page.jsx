@@ -39,8 +39,8 @@ export default function LoginPage() {
       const response = await loginUser({
         email: form.email,
         password: form.password,
-      }).unwrap(); // get raw response or throw error
-      console.log(response);
+      }).unwrap(); 
+      // console.log(response);
 
       toast.success("Login successful! Redirecting...");
       localStorage.setItem("token", response.token);

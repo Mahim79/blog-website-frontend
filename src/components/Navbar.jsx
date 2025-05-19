@@ -30,7 +30,9 @@ const Navbar = () => {
   return (
     <div className="sticky top-0 z-50">
       <div className="bg-slate-100 p-4 flex items-center justify-between ">
-        <Image src={logo} alt="NoteBook" className="w-32" />
+        <Link href={"/"}>
+          <Image src={logo} alt="NoteBook" className="w-32 cursor-pointer" />
+        </Link>
 
         {/* Menu Icon  */}
         <RxHamburgerMenu
@@ -82,25 +84,56 @@ const Navbar = () => {
                   Contact
                 </Link>
               </li>
-              <li onClick={() => setSlidebar(false)}>
-                <Link
-                  className={` py-2 px-3 font-semibold ${
-                    pathname === "/login" && "btn "
-                  }`}
-                  href={"/login"}
-                >
-                  Login
-                </Link>
+             <li onClick={() => setSlidebar(false)}>
+                {userDetails.username ? (
+                  <Link
+                    className={` py-2 px-3 font-semibold border border-bottom ${
+                      pathname === "/login" && "btn "
+                    }`}
+                    href={
+                      userDetails.role === "admin"
+                        ? `/admin/${userDetails._id}`
+                        : `/user/${userDetails._id}`
+                    }
+                  >
+                    <Image
+                      src={userDetails.profilePicture}
+                      width={32}
+                      height={32}
+                      alt={`${userDetails.username}'s profile picture`}
+                      className="inline-block rounded-full mr-2"
+                    />
+                    {userDetails.username}
+                  </Link>
+                ) : (
+                  <Link
+                    className={` py-2 px-3 font-semibold border border-slate-950  ${
+                      pathname === "/login" && "btn "
+                    }`}
+                    href={"/login"}
+                  >
+                    Login
+                  </Link>
+                )}
               </li>
               <li onClick={() => setSlidebar(false)}>
-                <Link
-                  className={` py-2 px-3 font-semibold ${
-                    pathname === "/resister" && "btn "
-                  }`}
-                  href={"/resister"}
-                >
-                  Sign Up
-                </Link>
+                {userDetails.username ? (
+                  <div
+                    className={` py-2 px-3 font-semibold border border-slate-950 cursor-pointer `}
+                    onClick={handleLogout}
+                  >
+                    logout
+                  </div>
+                ) : (
+                  <Link
+                    className={` py-2 px-3 font-semibold  border border-slate-950  ${
+                      pathname === "/resister" && "btn "
+                    }`}
+                    href={"/resister"}
+                  >
+                    Sign Up
+                  </Link>
+                )}
               </li>
             </ul>
           </header>

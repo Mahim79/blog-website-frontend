@@ -28,6 +28,7 @@ const LatestBlogCard = ({ blog }) => {
             width={200}
             height={200}
             alt="cover"
+            priority={false}
             className="w-full h-44 rounded-lg border-b"
           />
         </Link>
@@ -39,7 +40,7 @@ const LatestBlogCard = ({ blog }) => {
           >
             {/* profile Image  */}
             <Image
-              src={user?.profilePicture}
+              src={user?.profilePicture || "/images/user.png"}
               alt="author"
               width={100}
               height={100}

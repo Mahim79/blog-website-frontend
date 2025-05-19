@@ -5,6 +5,7 @@ import { IoSend } from "react-icons/io5";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import ConfirmModal from "./CofirmModal";
 import { useUserDetails } from "@/features/hooks/useUser";
+import Link from "next/link";
 
 export default function CommentCard({ comment, onDelete }) {
   const [editData, setEditData] = useState("");
@@ -33,14 +34,16 @@ export default function CommentCard({ comment, onDelete }) {
     <div className="flex gap-4 justify-between  p-4 border rounded-xl mb-3 shadow-sm bg-white">
       {/* Profile Picture */}
       <div className="flex ">
-        <div className=" border-r-2">
+        <Link 
+        href={`/user/${comment?.user?._id}`}
+        className=" border-r-2">
           <img
             src={comment.user.profilePicture}
             alt={comment.user.username}
             className="w-12 h-12 rounded-full object-cover"
           />
           <span className="font-xl underline">{comment.user.username}</span>
-        </div>
+        </Link>
 
         {/* Main Content */}
         <div className="ml-4">
@@ -93,12 +96,12 @@ export default function CommentCard({ comment, onDelete }) {
         userDetails.role === "admin") && (
         /* Action Buttons */
         <div className="flex flex-col gap-3 mt-2 text-gray-500">
-          <button
+          {/* <button
             onClick={() => setOnEdit(!onEdit)}
             className="hover:text-blue-500"
           >
             <FiEdit2 className="inline-block mr-1" />
-          </button>
+          </button> */}
           <button
             onClick={() => setConfirmModal(!confirmModal)}
             className="hover:text-red-500"

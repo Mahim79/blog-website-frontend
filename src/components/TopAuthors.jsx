@@ -13,11 +13,11 @@ const TopAuthors = () => {
     error,
     isSuccess,
   } = useGetTopUsersQuery();
-  console.log(allUsers);
+  // console.log(allUsers);
 
   const authors = allUsers?.data;
 
-  console.log(authors);
+  // console.log(authors);
 
   // Conditionally Rendered
   let content;

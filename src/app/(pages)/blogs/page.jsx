@@ -21,7 +21,7 @@ const Blogs = () => {
 
       <div className="lg:flex-1" style={{ flex: 4 }}>
         <h2 className="font-bold mx-5  md:mt-10 text-xl underline underline-offset-4 text-center decoration-teal">
-          Latest
+          Popular
         </h2>
         <div>
           <LatestBlog />

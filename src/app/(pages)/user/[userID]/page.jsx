@@ -102,6 +102,7 @@ const UserID = () => {
       if (modalAction === "logout") {
         localStorage.removeItem("token");
         toast.info("User logged out");
+        setUserDetails({});
         router.push("/login");
       }
     } catch (error) {

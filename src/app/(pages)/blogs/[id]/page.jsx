@@ -178,9 +178,9 @@ const BlogDetails = () => {
               alt="profile"
               className="w-8 h-8 rounded-full"
             />
-            <Link href={`/user/${blog?.author}`} className="hover:underline">
+            <p href={`/user/${blog?.author}`} className="hover:underline">
               {author?.username}
-            </Link>
+            </p>
           </Link>
 
           {/* Publish Time  */}

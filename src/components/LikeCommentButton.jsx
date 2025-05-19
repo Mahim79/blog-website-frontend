@@ -1,6 +1,7 @@
 import {
   useAddAndRemoveLikeMutation,
   useGetLikeCountsQuery,
+  useGetCommentsQuery
 } from "@/features/api/apiSlice";
 import { useState, useEffect } from "react";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
@@ -13,7 +14,12 @@ export default function LikeCommentButton({ onCommentButtonClick, blogId }) {
   const router = useRouter();
   const [addAndRemoveLike, { isLoading }] = useAddAndRemoveLikeMutation();
   const { data, refetch } = useGetLikeCountsQuery({ blogId });
-  console.log(data);
+  const {
+      data:commentsData,
+      isLoading: loadingComments,
+      refetch: refetchComments,
+    } = useGetCommentsQuery({ blogId })
+  // console.log(data);
 
   const { userDetails } = useUserDetails();
 
@@ -66,7 +72,7 @@ export default function LikeCommentButton({ onCommentButtonClick, blogId }) {
         onClick={onCommentButtonClick}
       >
         <FaRegCommentAlt className="text-2xl m-3 " />
-        <span className="text-lg hover:underline">5</span>
+        <span className="text-lg hover:underline">{commentsData?.data?.length}</span>
       </div>
     </div>
   );

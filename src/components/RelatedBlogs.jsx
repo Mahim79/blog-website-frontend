@@ -4,7 +4,7 @@ import { useRelatedBlogsQuery } from "@/features/api/apiSlice";
 
 const RelatedBlogs = ({ blog }) => {
   const { data: blogs } = useRelatedBlogsQuery(blog?.category);
-  console.log(blogs);
+  // console.log(blogs);
   // const filteredBlogs = blogs?.filter(b => b.id !== blog.id)
 
   return (
